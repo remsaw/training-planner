@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { usePlanner } from '../../context/PlannerContext';
-import { getWeekDays, formatDateRange, addDays, calculateDaysBetween, formatDate } from '../../utils/dateUtils';
+import { getWeekDays, formatDateRange, formatDate } from '../../utils/dateUtils';
 import { isPersonInSession } from '../../utils/conflictEngine';
 import { RoleBadge } from '../common/RoleBadge';
-import { TrainingSession, Person } from '../../types';
-import { Clock, MapPin, Plus, MoveHorizontal, AlertCircle, Sparkles } from 'lucide-react';
+import { Person } from '../../types';
+import { Clock, MapPin, Plus, AlertCircle } from 'lucide-react';
 
 interface ResourceWeekViewProps {
   onSelectSession: (id: string) => void;
@@ -96,17 +96,17 @@ export const ResourceWeekView: React.FC<ResourceWeekViewProps> = ({
     <div className="bg-white rounded-xl border border-gray-200/80 shadow-xs overflow-hidden select-none">
       {/* Table Container */}
       <div className="overflow-x-auto min-w-full">
-        <table className="w-full border-collapse text-left table-fixed min-w-[980px]">
+        <table className="w-full border-collapse text-left table-fixed min-w-[740px] sm:min-w-[980px]">
           {/* Header Row: Resources column + 7 Days */}
           <thead>
             <tr className="bg-slate-50 border-b border-gray-200 text-xs font-semibold text-gray-700">
-              <th className="w-64 p-3.5 border-r border-gray-200 sticky left-0 bg-slate-50 z-20">
-                <div className="flex items-center justify-between">
-                  <span className="uppercase tracking-wider text-[11px] text-gray-500 font-bold">
-                    Resource / Person
+              <th className="w-36 sm:w-52 md:w-64 p-2.5 sm:p-3.5 border-r border-gray-200 sticky left-0 bg-slate-50 z-20">
+                <div className="flex items-center justify-between gap-1">
+                  <span className="uppercase tracking-wider text-[10px] sm:text-[11px] text-gray-500 font-bold truncate">
+                    Resource
                   </span>
-                  <span className="text-[11px] font-medium text-gray-400">
-                    {filteredPeople.length} people
+                  <span className="text-[10px] sm:text-[11px] font-medium text-gray-400 shrink-0">
+                    {filteredPeople.length}
                   </span>
                 </div>
               </th>
@@ -116,20 +116,20 @@ export const ResourceWeekView: React.FC<ResourceWeekViewProps> = ({
                 return (
                   <th
                     key={d.dateStr}
-                    className={`p-3 text-center border-r border-gray-200/80 transition-colors ${
+                    className={`p-2 sm:p-3 text-center border-r border-gray-200/80 transition-colors ${
                       d.isWeekend ? 'bg-slate-100/60' : 'bg-slate-50'
                     } ${isToday ? 'bg-blue-50/70 border-b-2 border-b-blue-600' : ''}`}
                   >
                     <div className="flex flex-col items-center">
                       <span
-                        className={`text-[11px] uppercase font-bold tracking-wider ${
+                        className={`text-[10px] sm:text-[11px] uppercase font-bold tracking-wider ${
                           isToday ? 'text-blue-700 font-extrabold' : 'text-gray-500'
                         }`}
                       >
                         {d.dayName}
                       </span>
                       <div
-                        className={`w-7 h-7 flex items-center justify-center rounded-full text-sm font-bold mt-0.5 ${
+                        className={`w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center rounded-full text-xs sm:text-sm font-bold mt-0.5 ${
                           isToday
                             ? 'bg-blue-600 text-white shadow-xs'
                             : 'text-gray-800'
@@ -166,12 +166,12 @@ export const ResourceWeekView: React.FC<ResourceWeekViewProps> = ({
                 return (
                   <tr key={person.id} className="hover:bg-gray-50/50 transition-colors group">
                     {/* Sticky Resource Column */}
-                    <td className="p-3 border-r border-gray-200 bg-white sticky left-0 z-10 shadow-xs">
-                      <div className="flex items-center gap-2.5">
+                    <td className="p-2 sm:p-3 border-r border-gray-200 bg-white sticky left-0 z-10 shadow-xs">
+                      <div className="flex items-center gap-2 sm:gap-2.5">
                         <div
-                          className={`w-8 h-8 rounded-full ${
+                          className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full ${
                             person.avatarColor || 'bg-blue-600'
-                          } text-white flex items-center justify-center text-xs font-bold shrink-0 shadow-2xs`}
+                          } text-white flex items-center justify-center text-[11px] sm:text-xs font-bold shrink-0 shadow-2xs`}
                         >
                           {person.name
                             .split(' ')
@@ -180,18 +180,18 @@ export const ResourceWeekView: React.FC<ResourceWeekViewProps> = ({
                             .join('')}
                         </div>
                         <div className="min-w-0 flex-1">
-                          <div className="font-semibold text-gray-900 truncate flex items-center gap-1.5">
+                          <div className="font-semibold text-gray-900 truncate flex items-center gap-1 text-[11px] sm:text-xs">
                             <span className="truncate">{person.name}</span>
                             {!person.active && (
-                              <span className="text-[10px] bg-gray-100 text-gray-500 px-1 rounded">
+                              <span className="text-[9px] bg-gray-100 text-gray-500 px-1 rounded">
                                 Inactive
                               </span>
                             )}
                           </div>
-                          <div className="text-[11px] text-gray-500 truncate">
+                          <div className="text-[10px] sm:text-[11px] text-gray-500 truncate">
                             {person.department}
                           </div>
-                          <div className="flex gap-1 mt-1 flex-wrap">
+                          <div className="hidden sm:flex gap-1 mt-1 flex-wrap">
                             {person.roles.map((r) => (
                               <RoleBadge key={r} role={r} size="sm" />
                             ))}
@@ -388,15 +388,15 @@ export const ResourceWeekView: React.FC<ResourceWeekViewProps> = ({
       </div>
 
       {/* Footer Helper Note */}
-      <div className="px-4 py-2.5 bg-slate-50 border-t border-gray-200 text-xs text-gray-500 flex flex-wrap items-center justify-between gap-2">
+      <div className="px-3 sm:px-4 py-2.5 bg-slate-50 border-t border-gray-200 text-[11px] sm:text-xs text-gray-500 flex flex-wrap items-center justify-between gap-2">
         <div className="flex items-center gap-2">
-          <span className="inline-block w-2.5 h-2.5 rounded bg-blue-500"></span>
+          <span className="inline-block w-2.5 h-2.5 rounded bg-blue-500 shrink-0"></span>
           <span>Multi-day training appears as ONE continuous bar across its dates.</span>
         </div>
-        <div className="flex items-center gap-3">
-          <span>Drag blocks to reschedule date</span>
-          <span>•</span>
-          <span>Click empty slot to schedule</span>
+        <div className="flex items-center gap-2 sm:gap-3">
+          <span className="hidden sm:inline">Drag blocks to reschedule date</span>
+          <span className="hidden sm:inline">•</span>
+          <span>Tap empty slot to schedule</span>
         </div>
       </div>
     </div>

@@ -1,10 +1,9 @@
 import React, { useState, useMemo } from 'react';
 import { usePlanner } from '../../context/PlannerContext';
 import { getPeopleAvailability } from '../../utils/conflictEngine';
-import { Role } from '../../types';
 import { RoleBadge } from '../common/RoleBadge';
 import { formatDateRange, formatDuration, formatDate, addDays } from '../../utils/dateUtils';
-import { X, Search, CheckCircle2, AlertCircle, Calendar, Clock, Filter, Plus } from 'lucide-react';
+import { X, Search, CheckCircle2, AlertCircle, Plus } from 'lucide-react';
 
 interface AvailabilityCheckerModalProps {
   isOpen: boolean;
@@ -49,36 +48,36 @@ export const AvailabilityCheckerModal: React.FC<AvailabilityCheckerModalProps> =
   const busyList = filteredAvailability.filter((item) => !item.isAvailable);
 
   return (
-    <div className="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto animate-in fade-in duration-150">
-      <div className="bg-white rounded-2xl shadow-2xl border border-gray-200 w-full max-w-2xl overflow-hidden animate-in zoom-in-95 duration-150">
+    <div className="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-2.5 sm:p-4 overflow-y-auto animate-in fade-in duration-150">
+      <div className="bg-white rounded-2xl shadow-2xl border border-gray-200 w-full max-w-2xl max-h-[92dvh] flex flex-col overflow-hidden animate-in zoom-in-95 duration-150">
         {/* Header */}
-        <div className="px-6 py-4 border-b border-gray-200 flex items-center justify-between bg-slate-50">
+        <div className="px-4 sm:px-6 py-3.5 sm:py-4 border-b border-gray-200 flex items-center justify-between bg-slate-50 shrink-0">
           <div className="flex items-center gap-2">
-            <Search className="w-5 h-5 text-emerald-600" />
+            <Search className="w-5 h-5 text-emerald-600 shrink-0" />
             <div>
-              <h2 className="text-base font-bold text-gray-900">Check Resource Availability</h2>
-              <p className="text-xs text-gray-500">
+              <h2 className="text-sm sm:text-base font-bold text-gray-900">Check Resource Availability</h2>
+              <p className="text-[11px] sm:text-xs text-gray-500">
                 Instantly check who is free vs occupied based on 1-person-1-training-per-day rule
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 text-gray-400 hover:text-gray-700 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer"
+            className="p-1.5 text-gray-400 hover:text-gray-700 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer shrink-0"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Filter Parameters */}
-        <div className="p-5 border-b border-gray-200 bg-gray-50/60 grid grid-cols-1 sm:grid-cols-4 gap-3 text-xs">
+        <div className="p-3.5 sm:p-5 border-b border-gray-200 bg-gray-50/60 grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3 text-xs shrink-0">
           <div>
             <label className="block text-[11px] font-semibold text-gray-700 mb-1">Start Date</label>
             <input
               type="date"
               value={startDate}
               onChange={(e) => setStartDate(e.target.value)}
-              className="w-full px-2.5 py-1.5 border border-gray-300 rounded-lg bg-white"
+              className="w-full px-2 py-1.5 border border-gray-300 rounded-lg bg-white text-xs"
             />
           </div>
 
@@ -88,7 +87,7 @@ export const AvailabilityCheckerModal: React.FC<AvailabilityCheckerModalProps> =
               type="date"
               value={endDate}
               onChange={(e) => setEndDate(e.target.value)}
-              className="w-full px-2.5 py-1.5 border border-gray-300 rounded-lg bg-white"
+              className="w-full px-2 py-1.5 border border-gray-300 rounded-lg bg-white text-xs"
             />
           </div>
 
@@ -99,14 +98,14 @@ export const AvailabilityCheckerModal: React.FC<AvailabilityCheckerModalProps> =
                 type="time"
                 value={startTime}
                 onChange={(e) => setStartTime(e.target.value)}
-                className="w-1/2 px-1.5 py-1.5 border border-gray-300 rounded-lg bg-white text-[11px]"
+                className="w-1/2 px-1 py-1.5 border border-gray-300 rounded-lg bg-white text-[11px]"
               />
               <span className="text-gray-400">–</span>
               <input
                 type="time"
                 value={endTime}
                 onChange={(e) => setEndTime(e.target.value)}
-                className="w-1/2 px-1.5 py-1.5 border border-gray-300 rounded-lg bg-white text-[11px]"
+                className="w-1/2 px-1 py-1.5 border border-gray-300 rounded-lg bg-white text-[11px]"
               />
             </div>
           </div>
@@ -116,7 +115,7 @@ export const AvailabilityCheckerModal: React.FC<AvailabilityCheckerModalProps> =
             <select
               value={roleFilter}
               onChange={(e) => setRoleFilter(e.target.value as any)}
-              className="w-full px-2.5 py-1.5 border border-gray-300 rounded-lg bg-white text-xs"
+              className="w-full px-2 py-1.5 border border-gray-300 rounded-lg bg-white text-xs"
             >
               <option value="All">All Roles</option>
               <option value="Lecturer">Lecturer</option>
@@ -127,9 +126,9 @@ export const AvailabilityCheckerModal: React.FC<AvailabilityCheckerModalProps> =
         </div>
 
         {/* Results Body */}
-        <div className="p-6 max-h-[500px] overflow-y-auto space-y-5 text-xs">
+        <div className="p-4 sm:p-6 flex-1 overflow-y-auto space-y-5 text-xs">
           {/* Target Query Summary */}
-          <div className="text-xs text-gray-600 flex items-center justify-between bg-blue-50/60 p-2.5 rounded-lg border border-blue-200">
+          <div className="text-xs text-gray-600 flex flex-wrap items-center justify-between gap-2 bg-blue-50/60 p-2.5 rounded-lg border border-blue-200">
             <span>
               Target Period: <strong>{formatDateRange(startDate, endDate)}</strong> ({formatDuration(startDate, endDate)}), daily {startTime}–{endTime}
             </span>
@@ -164,7 +163,7 @@ export const AvailabilityCheckerModal: React.FC<AvailabilityCheckerModalProps> =
                       <div className="text-[11px] text-gray-500 mt-0.5">
                         {item.person.department}
                       </div>
-                      <div className="flex gap-1 mt-1">
+                      <div className="flex gap-1 mt-1 flex-wrap">
                         {item.person.roles.map((r) => (
                           <RoleBadge key={r} role={r} size="sm" />
                         ))}
@@ -238,7 +237,7 @@ export const AvailabilityCheckerModal: React.FC<AvailabilityCheckerModalProps> =
         </div>
 
         {/* Footer */}
-        <div className="px-6 py-3 border-t border-gray-200 bg-gray-50 flex items-center justify-end">
+        <div className="px-4 sm:px-6 py-3 border-t border-gray-200 bg-gray-50 flex items-center justify-end shrink-0">
           <button
             onClick={onClose}
             className="px-4 py-2 bg-gray-900 text-white rounded-lg text-xs font-semibold hover:bg-gray-800 transition-colors cursor-pointer"

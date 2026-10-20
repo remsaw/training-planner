@@ -21,7 +21,6 @@ export const ResourceDayView: React.FC<ResourceDayViewProps> = ({
     currentDate,
     settings,
     allConflicts,
-    moveSession,
   } = usePlanner();
 
   const containerRef = useRef<HTMLDivElement>(null);
@@ -64,14 +63,14 @@ export const ResourceDayView: React.FC<ResourceDayViewProps> = ({
   const nowTopPosition = currentNowMinutes * pixelsPerMinute;
 
   return (
-    <div className="bg-white rounded-xl border border-gray-200/80 shadow-xs overflow-hidden select-none flex flex-col h-[700px]">
+    <div className="bg-white rounded-xl border border-gray-200/80 shadow-xs overflow-hidden select-none flex flex-col h-[540px] sm:h-[700px]">
       {/* Top Banner Notice */}
-      <div className="bg-slate-50 border-b border-gray-200 px-4 py-2 flex items-center justify-between text-xs text-gray-600 shrink-0">
-        <div className="font-semibold text-gray-800">
-          Resource Day View: {currentDate.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })}
+      <div className="bg-slate-50 border-b border-gray-200 px-3 sm:px-4 py-2 flex flex-col sm:flex-row sm:items-center justify-between gap-1 text-xs text-gray-600 shrink-0">
+        <div className="font-semibold text-gray-800 truncate">
+          Resource Day View: {currentDate.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' })}
         </div>
-        <div className="flex items-center gap-2 text-gray-500">
-          <span>Working hours: {String(startHour).padStart(2, '0')}:00 – {String(endHour).padStart(2, '0')}:00</span>
+        <div className="flex items-center gap-2 text-[11px] sm:text-xs text-gray-500">
+          <span>Hours: {String(startHour).padStart(2, '0')}:00 – {String(endHour).padStart(2, '0')}:00</span>
           <span>•</span>
           <span>30-min increments</span>
         </div>
@@ -83,7 +82,7 @@ export const ResourceDayView: React.FC<ResourceDayViewProps> = ({
           {/* Sticky Resource Column Headers */}
           <div className="sticky top-0 z-30 bg-slate-100/95 backdrop-blur-xs border-b border-gray-200 flex">
             {/* Corner Cell: Sticky Time Header */}
-            <div className="w-20 shrink-0 p-3 border-r border-gray-200 bg-slate-100 font-bold text-xs text-gray-500 uppercase tracking-wider text-center sticky left-0 z-40">
+            <div className="w-16 sm:w-20 shrink-0 p-2.5 sm:p-3 border-r border-gray-200 bg-slate-100 font-bold text-[11px] sm:text-xs text-gray-500 uppercase tracking-wider text-center sticky left-0 z-40">
               TIME
             </div>
 
@@ -91,10 +90,10 @@ export const ResourceDayView: React.FC<ResourceDayViewProps> = ({
             {filteredPeople.map((person) => (
               <div
                 key={person.id}
-                className="w-56 shrink-0 p-3 border-r border-gray-200 bg-slate-100 flex items-center gap-2.5"
+                className="w-44 sm:w-56 shrink-0 p-2.5 sm:p-3 border-r border-gray-200 bg-slate-100 flex items-center gap-2"
               >
                 <div
-                  className={`w-7 h-7 rounded-full ${person.avatarColor || 'bg-blue-600'} text-white flex items-center justify-center text-xs font-bold shrink-0`}
+                  className={`w-6 h-6 sm:w-7 sm:h-7 rounded-full ${person.avatarColor || 'bg-blue-600'} text-white flex items-center justify-center text-[11px] sm:text-xs font-bold shrink-0`}
                 >
                   {person.name
                     .split(' ')
@@ -113,7 +112,7 @@ export const ResourceDayView: React.FC<ResourceDayViewProps> = ({
           {/* Time Rows and Resource Grid Container */}
           <div className="relative flex" style={{ height: `${gridHeight}px` }}>
             {/* Sticky Time Column */}
-            <div className="w-20 shrink-0 border-r border-gray-200 bg-slate-50 sticky left-0 z-20 select-none">
+            <div className="w-16 sm:w-20 shrink-0 border-r border-gray-200 bg-slate-50 sticky left-0 z-20 select-none">
               {intervals.map((item) => (
                 <div
                   key={item.label}
@@ -121,7 +120,7 @@ export const ResourceDayView: React.FC<ResourceDayViewProps> = ({
                   className="absolute left-0 right-0 text-center"
                 >
                   <span
-                    className={`text-[11px] font-semibold tracking-tight ${
+                    className={`text-[10px] sm:text-[11px] font-semibold tracking-tight ${
                       item.isHour ? 'text-gray-900' : 'text-gray-400'
                     }`}
                   >
@@ -137,7 +136,7 @@ export const ResourceDayView: React.FC<ResourceDayViewProps> = ({
                 <div
                   key={`line_${item.label}`}
                   style={{ top: `${item.minutes * pixelsPerMinute}px` }}
-                  className={`absolute left-20 right-0 border-t ${
+                  className={`absolute left-16 sm:left-20 right-0 border-t ${
                     item.isHour ? 'border-gray-200' : 'border-gray-100 border-dashed'
                   }`}
                 />
@@ -149,7 +148,7 @@ export const ResourceDayView: React.FC<ResourceDayViewProps> = ({
                   style={{ top: `${nowTopPosition}px` }}
                   className="absolute left-0 right-0 z-25 flex items-center pointer-events-none"
                 >
-                  <div className="w-20 text-right pr-2 text-[10px] font-bold text-rose-600 bg-rose-50 rounded-r py-0.5">
+                  <div className="w-16 sm:w-20 text-right pr-2 text-[10px] font-bold text-rose-600 bg-rose-50 rounded-r py-0.5">
                     NOW
                   </div>
                   <div className="h-0.5 bg-rose-500 flex-1 relative">
@@ -171,7 +170,7 @@ export const ResourceDayView: React.FC<ResourceDayViewProps> = ({
               return (
                 <div
                   key={person.id}
-                  className="w-56 shrink-0 border-r border-gray-200/80 relative group/col hover:bg-blue-50/10 transition-colors"
+                  className="w-44 sm:w-56 shrink-0 border-r border-gray-200/80 relative group/col hover:bg-blue-50/10 transition-colors"
                 >
                   {/* Click to add training at time slot */}
                   {intervals
@@ -191,7 +190,7 @@ export const ResourceDayView: React.FC<ResourceDayViewProps> = ({
                   {/* Render Scheduled Training Blocks for this person on this date */}
                   {activeSessions.map((session) => {
                     const course = courses.find((c) => c.id === session.courseId);
-                    const { role, roles: sessionRoles } = isPersonInSession(person.id, session);
+                    const { roles: sessionRoles } = isPersonInSession(person.id, session);
 
                     // Compute vertical positioning in pixels based on session.startTime and session.endTime
                     const gridStartMin = startHour * 60;
@@ -218,7 +217,7 @@ export const ResourceDayView: React.FC<ResourceDayViewProps> = ({
                           top: `${topPx}px`,
                           height: `${heightPx}px`,
                         }}
-                        className={`absolute left-1.5 right-1.5 rounded-lg p-2.5 flex flex-col justify-between shadow-xs transition-all z-15 cursor-pointer hover:shadow-md hover:scale-[1.01] ${
+                        className={`absolute left-1.5 right-1.5 rounded-lg p-2 sm:p-2.5 flex flex-col justify-between shadow-xs transition-all z-15 cursor-pointer hover:shadow-md hover:scale-[1.01] ${
                           isConflicting
                             ? 'bg-rose-50 border-2 border-rose-500 text-rose-950 ring-2 ring-rose-500/20'
                             : 'bg-blue-50/95 border border-blue-300 text-blue-950 hover:border-blue-500'
@@ -237,8 +236,8 @@ export const ResourceDayView: React.FC<ResourceDayViewProps> = ({
                             </div>
                           </div>
 
-                          <div className="flex items-center gap-1 text-[11px] font-semibold text-gray-700 mt-1">
-                            <Clock className="w-3 h-3 text-gray-500" />
+                          <div className="flex items-center gap-1 text-[10px] sm:text-[11px] font-semibold text-gray-700 mt-1">
+                            <Clock className="w-3 h-3 text-gray-500 shrink-0" />
                             <span>{session.startTime} – {session.endTime}</span>
                           </div>
 

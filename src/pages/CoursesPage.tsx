@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { usePlanner } from '../context/PlannerContext';
 import {
-  BookOpen,
   BookPlus,
   Search,
   Download,
@@ -9,7 +8,6 @@ import {
   CalendarPlus,
   Edit2,
   Trash2,
-  Calendar,
 } from 'lucide-react';
 
 interface CoursesPageProps {
@@ -52,11 +50,11 @@ export const CoursesPage: React.FC<CoursesPageProps> = ({
   };
 
   return (
-    <div className="p-6 max-w-7xl mx-auto space-y-4">
+    <div className="p-3 sm:p-6 max-w-7xl mx-auto space-y-3 sm:space-y-4">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-3">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-gray-900">Training Courses</h1>
+          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-gray-900">Training Courses</h1>
           <p className="text-xs text-gray-500 mt-0.5">
             Course curriculum catalog, duration templates, and scheduled session counts
           </p>
@@ -90,7 +88,7 @@ export const CoursesPage: React.FC<CoursesPageProps> = ({
       </div>
 
       {/* Filter & Search Bar */}
-      <div className="p-3.5 bg-white rounded-xl border border-gray-200/80 shadow-xs flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div className="p-3 sm:p-3.5 bg-white rounded-xl border border-gray-200/80 shadow-xs flex flex-col sm:flex-row items-center justify-between gap-2.5 sm:gap-3">
         <div className="relative flex-1 w-full sm:max-w-xs">
           <Search className="w-3.5 h-3.5 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
           <input
@@ -102,11 +100,11 @@ export const CoursesPage: React.FC<CoursesPageProps> = ({
           />
         </div>
 
-        <div>
+        <div className="w-full sm:w-auto">
           <select
             value={categoryFilter}
             onChange={(e) => setCategoryFilter(e.target.value)}
-            className="px-2.5 py-1.5 border border-gray-300 rounded-lg bg-white text-xs text-gray-700"
+            className="w-full sm:w-auto px-2.5 py-1.5 border border-gray-300 rounded-lg bg-white text-xs text-gray-700"
           >
             <option value="All">All Categories</option>
             {categories.map((cat) => (
@@ -121,15 +119,15 @@ export const CoursesPage: React.FC<CoursesPageProps> = ({
       {/* Table */}
       <div className="bg-white rounded-xl border border-gray-200/80 shadow-xs overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full border-collapse text-left text-xs">
+          <table className="w-full min-w-[640px] border-collapse text-left text-xs">
             <thead>
               <tr className="bg-slate-50 border-b border-gray-200 text-gray-600 font-semibold uppercase tracking-wider text-[11px]">
-                <th className="p-3.5 pl-5">Course Title</th>
-                <th className="p-3.5">Code</th>
-                <th className="p-3.5">Category</th>
-                <th className="p-3.5 text-center">Scheduled Events</th>
-                <th className="p-3.5">Status</th>
-                <th className="p-3.5 text-right pr-5">Actions</th>
+                <th className="p-3 sm:p-3.5 pl-4 sm:pl-5">Course Title</th>
+                <th className="p-3 sm:p-3.5">Code</th>
+                <th className="p-3 sm:p-3.5">Category</th>
+                <th className="p-3 sm:p-3.5 text-center">Scheduled Events</th>
+                <th className="p-3 sm:p-3.5">Status</th>
+                <th className="p-3 sm:p-3.5 text-right pr-4 sm:pr-5">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200">
@@ -145,7 +143,7 @@ export const CoursesPage: React.FC<CoursesPageProps> = ({
 
                   return (
                     <tr key={course.id} className="hover:bg-gray-50/60 transition-colors">
-                      <td className="p-3.5 pl-5">
+                      <td className="p-3 sm:p-3.5 pl-4 sm:pl-5">
                         <div className="flex items-center gap-3">
                           <div
                             className="w-3 h-8 rounded-full shrink-0"
@@ -162,23 +160,23 @@ export const CoursesPage: React.FC<CoursesPageProps> = ({
                         </div>
                       </td>
 
-                      <td className="p-3.5 font-mono text-gray-600 font-semibold">
+                      <td className="p-3 sm:p-3.5 font-mono text-gray-600 font-semibold">
                         {course.code || '—'}
                       </td>
 
-                      <td className="p-3.5">
+                      <td className="p-3 sm:p-3.5">
                         <span className="px-2 py-0.5 rounded-full text-[11px] font-medium bg-slate-100 text-slate-700 border border-slate-200">
                           {course.category}
                         </span>
                       </td>
 
-                      <td className="p-3.5 text-center">
+                      <td className="p-3 sm:p-3.5 text-center">
                         <span className="font-bold text-gray-900 bg-blue-50 text-blue-700 border border-blue-200 px-2.5 py-0.5 rounded-md">
                           {courseSessions.length} Scheduled
                         </span>
                       </td>
 
-                      <td className="p-3.5">
+                      <td className="p-3 sm:p-3.5">
                         {course.active ? (
                           <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
                             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
@@ -191,7 +189,7 @@ export const CoursesPage: React.FC<CoursesPageProps> = ({
                         )}
                       </td>
 
-                      <td className="p-3.5 text-right pr-5">
+                      <td className="p-3 sm:p-3.5 text-right pr-4 sm:pr-5">
                         {deletingCourseId === course.id ? (
                           <div className="flex items-center justify-end gap-1.5 animate-in fade-in">
                             <span className="text-[11px] font-bold text-rose-700">Delete?</span>

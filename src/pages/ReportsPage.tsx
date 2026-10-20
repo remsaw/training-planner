@@ -2,15 +2,12 @@ import React from 'react';
 import { usePlanner } from '../context/PlannerContext';
 import { calculateDaysBetween, timeToMinutes } from '../utils/dateUtils';
 import { isPersonInSession } from '../utils/conflictEngine';
-import { RoleBadge } from '../components/common/RoleBadge';
 import {
-  BarChart3,
   Download,
   Users,
   BookOpen,
   Calendar,
   Clock,
-  TrendingUp,
   AlertTriangle,
 } from 'lucide-react';
 
@@ -54,18 +51,12 @@ export const ReportsPage: React.FC = () => {
     };
   }).sort((a, b) => b.sessionCount - a.sessionCount);
 
-  // Department distribution
-  const deptCounts: Record<string, number> = {};
-  people.forEach((p) => {
-    deptCounts[p.department] = (deptCounts[p.department] || 0) + 1;
-  });
-
   return (
-    <div className="p-6 max-w-7xl mx-auto space-y-6">
+    <div className="p-3 sm:p-6 max-w-7xl mx-auto space-y-4 sm:space-y-6">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-3">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-gray-900">Training Reports &amp; Analytics</h1>
+          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-gray-900">Training Reports &amp; Analytics</h1>
           <p className="text-xs text-gray-500 mt-0.5">
             Resource utilization, instructor workload distribution, and curriculum volume
           </p>
@@ -73,7 +64,7 @@ export const ReportsPage: React.FC = () => {
 
         <button
           onClick={exportTraining}
-          className="flex items-center gap-1.5 px-3 py-1.5 border border-gray-300 rounded-lg text-xs font-semibold text-gray-700 hover:bg-gray-50 transition-colors cursor-pointer"
+          className="flex items-center justify-center sm:justify-start gap-1.5 px-3 py-1.5 border border-gray-300 rounded-lg text-xs font-semibold text-gray-700 hover:bg-gray-50 transition-colors cursor-pointer"
         >
           <Download className="w-3.5 h-3.5 text-blue-600" />
           <span>Export Master Schedule CSV</span>
@@ -81,20 +72,20 @@ export const ReportsPage: React.FC = () => {
       </div>
 
       {/* Summary KPI Highlights */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs">
-        <div className="p-4 bg-white rounded-xl border border-gray-200 shadow-xs">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 text-xs">
+        <div className="p-3.5 sm:p-4 bg-white rounded-xl border border-gray-200 shadow-xs">
           <div className="flex items-center justify-between text-gray-500">
-            <span>Total Scheduled Sessions</span>
-            <Calendar className="w-4 h-4 text-blue-600" />
+            <span className="truncate">Scheduled Sessions</span>
+            <Calendar className="w-4 h-4 text-blue-600 shrink-0" />
           </div>
           <div className="mt-2 text-2xl font-bold text-gray-900">{sessions.length}</div>
           <span className="text-[11px] text-gray-400">Across Oct–Nov 2026</span>
         </div>
 
-        <div className="p-4 bg-white rounded-xl border border-gray-200 shadow-xs">
+        <div className="p-3.5 sm:p-4 bg-white rounded-xl border border-gray-200 shadow-xs">
           <div className="flex items-center justify-between text-gray-500">
-            <span>Total Training Days</span>
-            <Clock className="w-4 h-4 text-indigo-600" />
+            <span className="truncate">Total Training Days</span>
+            <Clock className="w-4 h-4 text-indigo-600 shrink-0" />
           </div>
           <div className="mt-2 text-2xl font-bold text-indigo-600">
             {sessions.reduce((acc, s) => acc + calculateDaysBetween(s.startDate, s.endDate), 0)}
@@ -102,10 +93,10 @@ export const ReportsPage: React.FC = () => {
           <span className="text-[11px] text-gray-400">Cumulative instructor days</span>
         </div>
 
-        <div className="p-4 bg-white rounded-xl border border-gray-200 shadow-xs">
+        <div className="p-3.5 sm:p-4 bg-white rounded-xl border border-gray-200 shadow-xs">
           <div className="flex items-center justify-between text-gray-500">
-            <span>Active Instructors &amp; Staff</span>
-            <Users className="w-4 h-4 text-teal-600" />
+            <span className="truncate">Active Staff</span>
+            <Users className="w-4 h-4 text-teal-600 shrink-0" />
           </div>
           <div className="mt-2 text-2xl font-bold text-teal-600">
             {people.filter((p) => p.active).length}
@@ -113,10 +104,10 @@ export const ReportsPage: React.FC = () => {
           <span className="text-[11px] text-gray-400">Available resources</span>
         </div>
 
-        <div className="p-4 bg-white rounded-xl border border-gray-200 shadow-xs">
+        <div className="p-3.5 sm:p-4 bg-white rounded-xl border border-gray-200 shadow-xs">
           <div className="flex items-center justify-between text-gray-500">
-            <span>Active Conflicts</span>
-            <AlertTriangle className={`w-4 h-4 ${allConflicts.length > 0 ? 'text-rose-600' : 'text-emerald-600'}`} />
+            <span className="truncate">Active Conflicts</span>
+            <AlertTriangle className={`w-4 h-4 shrink-0 ${allConflicts.length > 0 ? 'text-rose-600' : 'text-emerald-600'}`} />
           </div>
           <div className={`mt-2 text-2xl font-bold ${allConflicts.length > 0 ? 'text-rose-600' : 'text-emerald-600'}`}>
             {allConflicts.length}
@@ -128,9 +119,9 @@ export const ReportsPage: React.FC = () => {
       </div>
 
       {/* Two-Column Analytics Layout */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
         {/* Person Workload Ranking */}
-        <div className="bg-white rounded-xl border border-gray-200 shadow-xs p-5">
+        <div className="bg-white rounded-xl border border-gray-200 shadow-xs p-4 sm:p-5">
           <div className="flex items-center justify-between mb-4">
             <div>
               <h2 className="font-bold text-sm text-gray-900">Resource Utilization Ranking</h2>
@@ -146,13 +137,13 @@ export const ReportsPage: React.FC = () => {
 
               return (
                 <div key={item.person.id} className="p-2.5 rounded-lg border border-gray-100 hover:bg-gray-50/60 transition-colors">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <span className="font-bold text-gray-400 text-xs w-4">#{idx + 1}</span>
-                      <span className="font-bold text-gray-900">{item.person.name}</span>
-                      <span className="text-gray-400 text-[10px]">({item.person.department})</span>
+                  <div className="flex items-center justify-between gap-2">
+                    <div className="flex items-center gap-2 min-w-0">
+                      <span className="font-bold text-gray-400 text-xs w-4 shrink-0">#{idx + 1}</span>
+                      <span className="font-bold text-gray-900 truncate">{item.person.name}</span>
+                      <span className="text-gray-400 text-[10px] truncate hidden sm:inline">({item.person.department})</span>
                     </div>
-                    <span className="font-bold text-blue-700 text-xs">
+                    <span className="font-bold text-blue-700 text-xs shrink-0">
                       {item.totalDays} days ({item.totalHours}h)
                     </span>
                   </div>
@@ -182,7 +173,7 @@ export const ReportsPage: React.FC = () => {
         </div>
 
         {/* Course Demand Analysis */}
-        <div className="bg-white rounded-xl border border-gray-200 shadow-xs p-5">
+        <div className="bg-white rounded-xl border border-gray-200 shadow-xs p-4 sm:p-5">
           <div className="flex items-center justify-between mb-4">
             <div>
               <h2 className="font-bold text-sm text-gray-900">Course Demand &amp; Volume</h2>
@@ -198,15 +189,15 @@ export const ReportsPage: React.FC = () => {
 
               return (
                 <div key={item.course.id} className="p-2.5 rounded-lg border border-gray-100 hover:bg-gray-50/60 transition-colors">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
+                  <div className="flex items-center justify-between gap-2">
+                    <div className="flex items-center gap-2 min-w-0">
                       <span
                         className="w-2.5 h-2.5 rounded-full shrink-0"
                         style={{ backgroundColor: item.course.color || '#2563eb' }}
                       />
-                      <span className="font-bold text-gray-900">{item.course.name}</span>
+                      <span className="font-bold text-gray-900 truncate">{item.course.name}</span>
                     </div>
-                    <span className="font-bold text-indigo-700 text-xs">
+                    <span className="font-bold text-indigo-700 text-xs shrink-0">
                       {item.sessionCount} sessions ({item.totalScheduledDays} days)
                     </span>
                   </div>

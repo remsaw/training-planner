@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { usePlanner } from '../../context/PlannerContext';
 import { ConflictReport } from '../../types';
-import { X, Upload, FileText, CheckCircle2, AlertTriangle, Download, Table } from 'lucide-react';
+import { X, Upload, FileText, CheckCircle2, AlertTriangle, Download } from 'lucide-react';
 import { downloadCsv } from '../../utils/csvUtils';
 
 interface ImportModalProps {
@@ -77,29 +77,29 @@ training_201,course_001,2026-11-16,2026-11-20,09:00,14:00,Auditorium B,person_00
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto animate-in fade-in duration-150">
-      <div className="bg-white rounded-2xl shadow-2xl border border-gray-200 w-full max-w-xl overflow-hidden animate-in zoom-in-95 duration-150">
+    <div className="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-2.5 sm:p-4 overflow-y-auto animate-in fade-in duration-150">
+      <div className="bg-white rounded-2xl shadow-2xl border border-gray-200 w-full max-w-xl max-h-[92dvh] flex flex-col overflow-hidden animate-in zoom-in-95 duration-150">
         {/* Header */}
-        <div className="px-6 py-4 border-b border-gray-200 flex items-center justify-between bg-slate-50">
+        <div className="px-4 sm:px-6 py-3.5 sm:py-4 border-b border-gray-200 flex items-center justify-between bg-slate-50 shrink-0">
           <div className="flex items-center gap-2">
-            <Upload className="w-5 h-5 text-blue-600" />
+            <Upload className="w-5 h-5 text-blue-600 shrink-0" />
             <div>
-              <h2 className="text-base font-bold text-gray-900">Import CSV Data</h2>
-              <p className="text-xs text-gray-500">
+              <h2 className="text-sm sm:text-base font-bold text-gray-900">Import CSV Data</h2>
+              <p className="text-[11px] sm:text-xs text-gray-500">
                 Bulk upload people, courses, or training sessions with auto-validation
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 text-gray-400 hover:text-gray-700 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer"
+            className="p-1.5 text-gray-400 hover:text-gray-700 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer shrink-0"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Tab selection */}
-        <div className="flex border-b border-gray-200 bg-gray-50 text-xs font-semibold px-6 pt-2">
+        <div className="flex border-b border-gray-200 bg-gray-50 text-xs font-semibold px-4 sm:px-6 pt-2 overflow-x-auto shrink-0">
           {(['people', 'courses', 'training'] as const).map((tab) => (
             <button
               key={tab}
@@ -108,7 +108,7 @@ training_201,course_001,2026-11-16,2026-11-20,09:00,14:00,Auditorium B,person_00
                 setImportResult(null);
                 setCsvContent('');
               }}
-              className={`px-4 py-2.5 border-b-2 capitalize transition-colors cursor-pointer ${
+              className={`px-3 sm:px-4 py-2.5 border-b-2 capitalize transition-colors cursor-pointer whitespace-nowrap ${
                 activeTab === tab
                   ? 'border-blue-600 text-blue-700 font-bold'
                   : 'border-transparent text-gray-500 hover:text-gray-800'
@@ -120,9 +120,9 @@ training_201,course_001,2026-11-16,2026-11-20,09:00,14:00,Auditorium B,person_00
         </div>
 
         {/* Content */}
-        <div className="p-6 space-y-4 text-xs">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
+        <div className="p-4 sm:p-6 flex-1 overflow-y-auto space-y-4 text-xs">
+          <div className="flex items-center justify-between flex-wrap gap-2">
+            <div className="flex items-center gap-2 flex-wrap">
               <label className="px-3 py-1.5 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 cursor-pointer font-medium flex items-center gap-1.5">
                 <FileText className="w-3.5 h-3.5 text-blue-600" />
                 <span>Upload CSV File</span>
@@ -160,7 +160,7 @@ training_201,course_001,2026-11-16,2026-11-20,09:00,14:00,Auditorium B,person_00
             <textarea
               value={csvContent}
               onChange={(e) => setCsvContent(e.target.value)}
-              rows={8}
+              rows={7}
               placeholder="Paste comma-separated CSV text here..."
               className="w-full font-mono text-[11px] p-3 border border-gray-300 rounded-lg bg-gray-50 focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-blue-500/20"
             />
@@ -209,7 +209,7 @@ training_201,course_001,2026-11-16,2026-11-20,09:00,14:00,Auditorium B,person_00
         </div>
 
         {/* Footer */}
-        <div className="px-6 py-3.5 border-t border-gray-200 bg-gray-50 flex items-center justify-end gap-2">
+        <div className="px-4 sm:px-6 py-3 border-t border-gray-200 bg-gray-50 flex items-center justify-end gap-2 shrink-0">
           <button
             type="button"
             onClick={onClose}

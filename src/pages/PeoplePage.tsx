@@ -4,18 +4,13 @@ import { RoleBadge } from '../components/common/RoleBadge';
 import { isPersonInSession } from '../utils/conflictEngine';
 import { isDateWithin, formatDate } from '../utils/dateUtils';
 import {
-  Users,
   UserPlus,
   Search,
-  Filter,
   Download,
   Upload,
-  Calendar,
   Edit2,
   UserX,
   UserCheck,
-  CheckCircle2,
-  AlertCircle,
   Trash2,
 } from 'lucide-react';
 import { Role } from '../types';
@@ -59,11 +54,11 @@ export const PeoplePage: React.FC<PeoplePageProps> = ({
   });
 
   return (
-    <div className="p-6 max-w-7xl mx-auto space-y-4">
+    <div className="p-3 sm:p-6 max-w-7xl mx-auto space-y-3 sm:space-y-4">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-3">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-gray-900">People / Resources</h1>
+          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-gray-900">People / Resources</h1>
           <p className="text-xs text-gray-500 mt-0.5">
             Manage instructional staff, department assignments, and availability
           </p>
@@ -97,7 +92,7 @@ export const PeoplePage: React.FC<PeoplePageProps> = ({
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="p-3.5 bg-white rounded-xl border border-gray-200/80 shadow-xs flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div className="p-3 sm:p-3.5 bg-white rounded-xl border border-gray-200/80 shadow-xs flex flex-col sm:flex-row items-center justify-between gap-2.5 sm:gap-3">
         <div className="relative flex-1 w-full sm:max-w-xs">
           <Search className="w-3.5 h-3.5 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
           <input
@@ -109,11 +104,11 @@ export const PeoplePage: React.FC<PeoplePageProps> = ({
           />
         </div>
 
-        <div className="flex items-center gap-2 w-full sm:w-auto">
+        <div className="grid grid-cols-2 sm:flex items-center gap-2 w-full sm:w-auto">
           <select
             value={roleFilter}
             onChange={(e) => setRoleFilter(e.target.value as any)}
-            className="px-2.5 py-1.5 border border-gray-300 rounded-lg bg-white text-xs text-gray-700"
+            className="px-2.5 py-1.5 border border-gray-300 rounded-lg bg-white text-xs text-gray-700 w-full sm:w-auto"
           >
             <option value="All">All Roles</option>
             <option value="Multiple">⭐ Multiple Roles</option>
@@ -125,7 +120,7 @@ export const PeoplePage: React.FC<PeoplePageProps> = ({
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value as any)}
-            className="px-2.5 py-1.5 border border-gray-300 rounded-lg bg-white text-xs text-gray-700"
+            className="px-2.5 py-1.5 border border-gray-300 rounded-lg bg-white text-xs text-gray-700 w-full sm:w-auto"
           >
             <option value="All">All Status</option>
             <option value="Active">Active Only</option>
@@ -137,15 +132,15 @@ export const PeoplePage: React.FC<PeoplePageProps> = ({
       {/* Table */}
       <div className="bg-white rounded-xl border border-gray-200/80 shadow-xs overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full border-collapse text-left text-xs">
+          <table className="w-full min-w-[680px] border-collapse text-left text-xs">
             <thead>
               <tr className="bg-slate-50 border-b border-gray-200 text-gray-600 font-semibold uppercase tracking-wider text-[11px]">
-                <th className="p-3.5 pl-5">Name &amp; ID</th>
-                <th className="p-3.5">Department</th>
-                <th className="p-3.5">Role</th>
-                <th className="p-3.5">Today's Status</th>
-                <th className="p-3.5 text-center">Training Count</th>
-                <th className="p-3.5 text-right pr-5">Actions</th>
+                <th className="p-3 sm:p-3.5 pl-4 sm:pl-5">Name &amp; ID</th>
+                <th className="p-3 sm:p-3.5">Department</th>
+                <th className="p-3 sm:p-3.5">Role</th>
+                <th className="p-3 sm:p-3.5">Today's Status</th>
+                <th className="p-3 sm:p-3.5 text-center">Training Count</th>
+                <th className="p-3 sm:p-3.5 text-right pr-4 sm:pr-5">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200">
@@ -169,7 +164,7 @@ export const PeoplePage: React.FC<PeoplePageProps> = ({
 
                   return (
                     <tr key={person.id} className="hover:bg-gray-50/60 transition-colors">
-                      <td className="p-3.5 pl-5">
+                      <td className="p-3 sm:p-3.5 pl-4 sm:pl-5">
                         <div className="flex items-center gap-3">
                           <div
                             className={`w-9 h-9 rounded-full ${
@@ -198,11 +193,11 @@ export const PeoplePage: React.FC<PeoplePageProps> = ({
                         </div>
                       </td>
 
-                      <td className="p-3.5 text-gray-700 font-medium">
+                      <td className="p-3 sm:p-3.5 text-gray-700 font-medium">
                         {person.department}
                       </td>
 
-                      <td className="p-3.5">
+                      <td className="p-3 sm:p-3.5">
                         <div className="flex gap-1 flex-wrap">
                           {person.roles.map((r) => (
                             <RoleBadge key={r} role={r} size="sm" />
@@ -210,7 +205,7 @@ export const PeoplePage: React.FC<PeoplePageProps> = ({
                         </div>
                       </td>
 
-                      <td className="p-3.5">
+                      <td className="p-3 sm:p-3.5">
                         {!person.active ? (
                           <span className="inline-flex items-center gap-1 text-[11px] text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full">
                             Deactivated
@@ -228,13 +223,13 @@ export const PeoplePage: React.FC<PeoplePageProps> = ({
                         )}
                       </td>
 
-                      <td className="p-3.5 text-center">
+                      <td className="p-3 sm:p-3.5 text-center">
                         <span className="font-bold text-gray-900 bg-slate-100 px-2.5 py-1 rounded-md">
                           {trainingCount} Trainings
                         </span>
                       </td>
 
-                      <td className="p-3.5 text-right pr-5">
+                      <td className="p-3 sm:p-3.5 text-right pr-4 sm:pr-5">
                         <div className="flex items-center justify-end gap-1.5">
                           <button
                             onClick={() => onViewSchedule(person.id)}

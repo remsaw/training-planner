@@ -8,10 +8,6 @@ import {
   Calendar,
   Clock,
   MapPin,
-  CheckCircle2,
-  AlertCircle,
-  Briefcase,
-  GraduationCap,
 } from 'lucide-react';
 
 interface PersonScheduleModalProps {
@@ -60,13 +56,13 @@ export const PersonScheduleModal: React.FC<PersonScheduleModalProps> = ({
   const isBusyToday = Boolean(busyTodaySession);
 
   return (
-    <div className="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto animate-in fade-in duration-150">
-      <div className="bg-white rounded-2xl shadow-2xl border border-gray-200 w-full max-w-xl overflow-hidden animate-in zoom-in-95 duration-150">
+    <div className="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-2.5 sm:p-4 overflow-y-auto animate-in fade-in duration-150">
+      <div className="bg-white rounded-2xl shadow-2xl border border-gray-200 w-full max-w-xl max-h-[92dvh] flex flex-col overflow-hidden animate-in zoom-in-95 duration-150">
         {/* Header */}
-        <div className="px-6 py-4 border-b border-gray-200 flex items-start justify-between bg-slate-50">
-          <div className="flex items-center gap-3">
+        <div className="px-4 sm:px-6 py-3.5 sm:py-4 border-b border-gray-200 flex items-start justify-between bg-slate-50 shrink-0">
+          <div className="flex items-center gap-3 min-w-0">
             <div
-              className={`w-12 h-12 rounded-full ${person.avatarColor || 'bg-blue-600'} text-white flex items-center justify-center font-bold text-base shadow-sm`}
+              className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full ${person.avatarColor || 'bg-blue-600'} text-white flex items-center justify-center font-bold text-sm sm:text-base shadow-sm shrink-0`}
             >
               {person.name
                 .split(' ')
@@ -74,12 +70,12 @@ export const PersonScheduleModal: React.FC<PersonScheduleModalProps> = ({
                 .slice(0, 2)
                 .join('')}
             </div>
-            <div>
-              <h2 className="text-lg font-bold text-gray-900">{person.name}</h2>
-              <div className="flex items-center gap-2 mt-0.5">
+            <div className="min-w-0">
+              <h2 className="text-base sm:text-lg font-bold text-gray-900 truncate">{person.name}</h2>
+              <div className="flex items-center gap-2 mt-0.5 flex-wrap">
                 <span className="text-xs text-gray-500">{person.department}</span>
-                <span className="text-gray-300">•</span>
-                <div className="flex gap-1">
+                <span className="text-gray-300 hidden sm:inline">•</span>
+                <div className="flex gap-1 flex-wrap">
                   {person.roles.map((r) => (
                     <RoleBadge key={r} role={r} size="sm" />
                   ))}
@@ -89,27 +85,27 @@ export const PersonScheduleModal: React.FC<PersonScheduleModalProps> = ({
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 text-gray-400 hover:text-gray-700 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer"
+            className="p-1.5 text-gray-400 hover:text-gray-700 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer shrink-0"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Statistics Bar */}
-        <div className="grid grid-cols-4 divide-x divide-gray-200 border-b border-gray-200 bg-white p-3 text-center text-xs">
-          <div>
+        <div className="grid grid-cols-2 sm:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-gray-200 border-b border-gray-200 bg-white p-2.5 sm:p-3 text-center text-xs shrink-0">
+          <div className="p-1">
             <span className="text-gray-400 block text-[11px]">Training Count</span>
             <span className="font-bold text-gray-900 text-base">{trainingCount}</span>
           </div>
-          <div>
+          <div className="p-1">
             <span className="text-gray-400 block text-[11px]">Training Days</span>
             <span className="font-bold text-blue-600 text-base">{totalDays}</span>
           </div>
-          <div>
+          <div className="p-1">
             <span className="text-gray-400 block text-[11px]">Training Hours</span>
             <span className="font-bold text-indigo-600 text-base">{Math.round(totalHours)}h</span>
           </div>
-          <div>
+          <div className="p-1">
             <span className="text-gray-400 block text-[11px]">Today's Status</span>
             {isBusyToday ? (
               <span className="font-bold text-rose-600 text-xs flex items-center justify-center gap-1 mt-1">
@@ -126,7 +122,7 @@ export const PersonScheduleModal: React.FC<PersonScheduleModalProps> = ({
         </div>
 
         {/* Schedule List */}
-        <div className="p-6 max-h-96 overflow-y-auto space-y-3 text-xs">
+        <div className="p-4 sm:p-6 flex-1 overflow-y-auto space-y-3 text-xs">
           <h3 className="font-bold uppercase tracking-wider text-[11px] text-gray-500 flex items-center gap-1.5">
             <Calendar className="w-3.5 h-3.5 text-blue-600" />
             <span>Assigned Training Sessions ({personSessions.length})</span>
@@ -150,15 +146,15 @@ export const PersonScheduleModal: React.FC<PersonScheduleModalProps> = ({
                     onClose();
                     onSelectSession(session.id);
                   }}
-                  className="p-3.5 rounded-xl border border-gray-200 hover:border-blue-300 hover:bg-blue-50/30 transition-all cursor-pointer flex items-start justify-between gap-3 shadow-2xs"
+                  className="p-3 sm:p-3.5 rounded-xl border border-gray-200 hover:border-blue-300 hover:bg-blue-50/30 transition-all cursor-pointer flex items-start justify-between gap-3 shadow-2xs"
                 >
                   <div className="min-w-0 flex-1">
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 flex-wrap">
                       <span className="font-bold text-gray-900 text-xs">{course?.name}</span>
                       {role && <RoleBadge role={role} size="sm" />}
                     </div>
 
-                    <div className="flex flex-wrap items-center gap-3 text-[11px] text-gray-600 mt-1.5 font-medium">
+                    <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-[11px] text-gray-600 mt-1.5 font-medium">
                       <span className="flex items-center gap-1">
                         <Calendar className="w-3 h-3 text-gray-400" />
                         {period} ({duration} days)
@@ -186,13 +182,13 @@ export const PersonScheduleModal: React.FC<PersonScheduleModalProps> = ({
         </div>
 
         {/* Footer */}
-        <div className="px-6 py-3.5 border-t border-gray-200 bg-gray-50 flex items-center justify-between text-xs">
-          <span className="text-gray-500">
-            Rule enforced: Maximum 1 session per calendar day.
+        <div className="px-4 sm:px-6 py-3 border-t border-gray-200 bg-gray-50 flex items-center justify-between gap-2 text-xs shrink-0">
+          <span className="text-gray-500 text-[11px] sm:text-xs">
+            Rule enforced: Max 1 session per calendar day.
           </span>
           <button
             onClick={onClose}
-            className="px-4 py-1.5 bg-gray-900 text-white rounded-lg font-semibold hover:bg-gray-800 transition-colors cursor-pointer"
+            className="px-4 py-1.5 bg-gray-900 text-white rounded-lg font-semibold hover:bg-gray-800 transition-colors cursor-pointer shrink-0"
           >
             Close
           </button>

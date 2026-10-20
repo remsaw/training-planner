@@ -2,14 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { usePlanner } from '../context/PlannerContext';
 import { GOOGLE_APPS_SCRIPT_CODE } from '../utils/googleSheetsSync';
 import {
-  Settings,
   Clock,
   Globe,
   RotateCcw,
   Download,
-  Calendar,
-  Shield,
-  Layers,
   Database,
   Lock,
   KeyRound,
@@ -99,24 +95,24 @@ export const SettingsPage: React.FC = () => {
   };
 
   return (
-    <div className="p-6 max-w-4xl mx-auto space-y-6">
+    <div className="p-3 sm:p-6 max-w-4xl mx-auto space-y-4 sm:space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold tracking-tight text-gray-900">Application Settings</h1>
+        <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-gray-900">Application Settings</h1>
         <p className="text-xs text-gray-500 mt-0.5">
           Configure Google Sheets cloud sync, working hours, language, and database backups
         </p>
       </div>
 
       {/* Google Sheets Cloud Sync (Multi-Device Persistence) */}
-      <div className="bg-white rounded-xl border border-emerald-200 shadow-xs p-5 space-y-4">
-        <div className="flex items-center justify-between pb-3 border-b border-gray-100 flex-wrap gap-2">
-          <div className="flex items-center gap-2.5">
-            <div className="p-2 rounded-lg bg-emerald-50 text-emerald-600">
+      <div className="bg-white rounded-xl border border-emerald-200 shadow-xs p-4 sm:p-5 space-y-4">
+        <div className="flex items-start sm:items-center justify-between pb-3 border-b border-gray-100 flex-wrap gap-2.5">
+          <div className="flex items-start sm:items-center gap-2.5">
+            <div className="p-2 rounded-lg bg-emerald-50 text-emerald-600 shrink-0">
               <Cloud className="w-5 h-5" />
             </div>
             <div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 flex-wrap">
                 <h2 className="font-bold text-sm text-gray-900">Google Sheets Cloud Database Sync</h2>
                 {googleSheetsUrl ? (
                   syncStatus === 'syncing' ? (
@@ -141,7 +137,7 @@ export const SettingsPage: React.FC = () => {
                   </span>
                 )}
               </div>
-              <p className="text-xs text-gray-500">
+              <p className="text-xs text-gray-500 mt-0.5">
                 Keep People, Courses, and Trainings automatically synced across all your devices via Google Sheets
               </p>
             </div>
@@ -159,7 +155,7 @@ export const SettingsPage: React.FC = () => {
 
         {/* Step-by-step Setup Guide */}
         {showSetupGuide && (
-          <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 text-xs space-y-3">
+          <div className="p-3.5 sm:p-4 rounded-xl bg-slate-50 border border-slate-200 text-xs space-y-3">
             <div className="flex items-center justify-between flex-wrap gap-2">
               <span className="font-bold text-slate-900">How to connect your Google Sheet (Free):</span>
               <button
@@ -172,7 +168,7 @@ export const SettingsPage: React.FC = () => {
               </button>
             </div>
 
-            <ol className="list-decimal list-inside space-y-1.5 text-slate-700 leading-relaxed">
+            <ol className="list-decimal list-inside space-y-1.5 text-slate-700 leading-relaxed break-words">
               <li>
                 Create a new blank Google Sheet at{' '}
                 <a
@@ -233,7 +229,7 @@ export const SettingsPage: React.FC = () => {
 
           {googleSheetsUrl && (
             <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-gray-100 text-xs">
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 flex-wrap">
                 <button
                   type="button"
                   disabled={syncStatus === 'syncing'}
@@ -270,10 +266,10 @@ export const SettingsPage: React.FC = () => {
       </div>
 
       {/* Access Password & Security */}
-      <div className="bg-white rounded-xl border border-gray-200 shadow-xs p-5 space-y-4">
+      <div className="bg-white rounded-xl border border-gray-200 shadow-xs p-4 sm:p-5 space-y-4">
         <div className="flex items-center justify-between pb-3 border-b border-gray-100 flex-wrap gap-2">
           <div className="flex items-center gap-2">
-            <Lock className="w-5 h-5 text-blue-600" />
+            <Lock className="w-5 h-5 text-blue-600 shrink-0" />
             <div>
               <h2 className="font-bold text-sm text-gray-900">Access Security &amp; Password Gate</h2>
               <p className="text-xs text-gray-500">
@@ -321,9 +317,9 @@ export const SettingsPage: React.FC = () => {
       </div>
 
       {/* Calendar Working Hours */}
-      <div className="bg-white rounded-xl border border-gray-200 shadow-xs p-5 space-y-4">
+      <div className="bg-white rounded-xl border border-gray-200 shadow-xs p-4 sm:p-5 space-y-4">
         <div className="flex items-center gap-2 pb-3 border-b border-gray-100">
-          <Clock className="w-5 h-5 text-blue-600" />
+          <Clock className="w-5 h-5 text-blue-600 shrink-0" />
           <div>
             <h2 className="font-bold text-sm text-gray-900">Calendar Working Hours &amp; Grid</h2>
             <p className="text-xs text-gray-500">Defines the horizontal/vertical time grid bounds</p>
@@ -389,9 +385,9 @@ export const SettingsPage: React.FC = () => {
       </div>
 
       {/* Language & Localization */}
-      <div className="bg-white rounded-xl border border-gray-200 shadow-xs p-5 space-y-4">
+      <div className="bg-white rounded-xl border border-gray-200 shadow-xs p-4 sm:p-5 space-y-4">
         <div className="flex items-center gap-2 pb-3 border-b border-gray-100">
-          <Globe className="w-5 h-5 text-indigo-600" />
+          <Globe className="w-5 h-5 text-indigo-600 shrink-0" />
           <div>
             <h2 className="font-bold text-sm text-gray-900">Language &amp; Layout</h2>
             <p className="text-xs text-gray-500">Multilingual readiness with RTL support architecture</p>
@@ -432,9 +428,9 @@ export const SettingsPage: React.FC = () => {
       </div>
 
       {/* Backup and Data Export */}
-      <div className="bg-white rounded-xl border border-gray-200 shadow-xs p-5 space-y-4">
+      <div className="bg-white rounded-xl border border-gray-200 shadow-xs p-4 sm:p-5 space-y-4">
         <div className="flex items-center gap-2 pb-3 border-b border-gray-100">
-          <Database className="w-5 h-5 text-teal-600" />
+          <Database className="w-5 h-5 text-teal-600 shrink-0" />
           <div>
             <h2 className="font-bold text-sm text-gray-900">Data Management &amp; CSV Backup</h2>
             <p className="text-xs text-gray-500">Export database collections as structured CSV files</p>
@@ -477,7 +473,7 @@ export const SettingsPage: React.FC = () => {
       </div>
 
       {/* Clear All Data Box */}
-      <div className="bg-white rounded-xl border border-rose-200 shadow-xs p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="bg-white rounded-xl border border-rose-200 shadow-xs p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h2 className="font-bold text-sm text-rose-900 flex items-center gap-1.5">
             <RotateCcw className="w-4 h-4 text-rose-600" />
@@ -489,7 +485,7 @@ export const SettingsPage: React.FC = () => {
         </div>
 
         {confirmReset ? (
-          <div className="flex items-center gap-2 animate-in fade-in shrink-0">
+          <div className="flex items-center gap-2 animate-in fade-in shrink-0 flex-wrap">
             <span className="text-xs text-rose-800 font-bold">Clear all data?</span>
             <button
               onClick={handleResetDemo}

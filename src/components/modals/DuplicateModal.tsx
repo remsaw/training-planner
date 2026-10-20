@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { usePlanner } from '../../context/PlannerContext';
 import { calculateDaysBetween, addDays, formatDateRange, formatDuration } from '../../utils/dateUtils';
 import { validateSessionConflicts } from '../../utils/conflictEngine';
-import { X, Copy, AlertTriangle, Calendar, CheckCircle2 } from 'lucide-react';
+import { X, Copy, AlertTriangle, CheckCircle2 } from 'lucide-react';
 
 interface DuplicateModalProps {
   sessionId: string | null;
@@ -66,10 +66,10 @@ export const DuplicateModal: React.FC<DuplicateModalProps> = ({ sessionId, onClo
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto animate-in fade-in duration-150">
-      <div className="bg-white rounded-2xl shadow-2xl border border-gray-200 w-full max-w-md overflow-hidden animate-in zoom-in-95 duration-150">
+    <div className="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-2.5 sm:p-4 overflow-y-auto animate-in fade-in duration-150">
+      <div className="bg-white rounded-2xl shadow-2xl border border-gray-200 w-full max-w-md max-h-[92dvh] flex flex-col overflow-hidden animate-in zoom-in-95 duration-150">
         {/* Header */}
-        <div className="px-6 py-4 border-b border-gray-200 flex items-center justify-between bg-slate-50">
+        <div className="px-4 sm:px-6 py-3.5 sm:py-4 border-b border-gray-200 flex items-center justify-between bg-slate-50 shrink-0">
           <div className="flex items-center gap-2">
             <Copy className="w-5 h-5 text-blue-600" />
             <h2 className="text-base font-bold text-gray-900">Duplicate Training Event</h2>
@@ -83,7 +83,7 @@ export const DuplicateModal: React.FC<DuplicateModalProps> = ({ sessionId, onClo
         </div>
 
         {/* Body */}
-        <div className="p-6 space-y-4 text-xs">
+        <div className="p-4 sm:p-6 flex-1 overflow-y-auto space-y-4 text-xs">
           <div className="p-3 bg-blue-50/70 border border-blue-200 rounded-xl text-blue-950">
             <span className="font-semibold block text-blue-900">Source Training</span>
             <div className="font-bold text-sm mt-0.5">{course?.name}</div>
@@ -133,7 +133,7 @@ export const DuplicateModal: React.FC<DuplicateModalProps> = ({ sessionId, onClo
         </div>
 
         {/* Footer */}
-        <div className="px-6 py-3.5 border-t border-gray-200 bg-gray-50 flex items-center justify-end gap-2">
+        <div className="px-4 sm:px-6 py-3 sm:py-3.5 border-t border-gray-200 bg-gray-50 flex items-center justify-end gap-2 shrink-0">
           <button
             type="button"
             onClick={onClose}

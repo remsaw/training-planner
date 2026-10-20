@@ -1,17 +1,13 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { usePlanner } from '../../context/PlannerContext';
-import { TrainingSession, Role, Person } from '../../types';
+import { TrainingSession, Role } from '../../types';
 import { calculateDaysBetween, formatDuration, formatDateRange, addDays, formatDate } from '../../utils/dateUtils';
-import { getPeopleAvailability, checkPersonConflict, validateSessionConflicts } from '../../utils/conflictEngine';
+import { getPeopleAvailability, validateSessionConflicts } from '../../utils/conflictEngine';
 import { RoleBadge } from '../common/RoleBadge';
 import {
   X,
   AlertTriangle,
   AlertCircle,
-  Calendar,
-  Clock,
-  MapPin,
-  FileText,
   Repeat,
   PlusCircle,
   CheckCircle2,
@@ -496,28 +492,28 @@ export const TrainingModal: React.FC<TrainingModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto animate-in fade-in duration-200">
-      <div className="bg-white rounded-2xl shadow-2xl border border-gray-200 w-full max-w-2xl max-h-[92vh] flex flex-col overflow-hidden">
+    <div className="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-2.5 sm:p-4 overflow-y-auto animate-in fade-in duration-200">
+      <div className="bg-white rounded-2xl shadow-2xl border border-gray-200 w-full max-w-2xl max-h-[92dvh] flex flex-col overflow-hidden">
         {/* Header */}
-        <div className="px-6 py-4 border-b border-gray-200 flex items-center justify-between bg-slate-50">
+        <div className="px-4 sm:px-6 py-3.5 sm:py-4 border-b border-gray-200 flex items-center justify-between bg-slate-50 shrink-0">
           <div>
-            <h2 className="text-lg font-bold text-gray-900">
+            <h2 className="text-base sm:text-lg font-bold text-gray-900">
               {isEdit ? 'Edit Training Session' : 'Schedule Training Event'}
             </h2>
-            <p className="text-xs text-gray-500 mt-0.5">
+            <p className="text-[11px] sm:text-xs text-gray-500 mt-0.5">
               Visual multi-day scheduling with deterministic conflict prevention
             </p>
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 text-gray-400 hover:text-gray-700 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer"
+            className="p-1.5 text-gray-400 hover:text-gray-700 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer shrink-0"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Form Body */}
-        <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto p-6 space-y-4">
+        <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-4">
           {/* Conflict Warning Alert Banner if any conflict detected */}
           {(inlineConflictWarning || currentValidationConflicts.length > 0) && (
             <div className="p-3.5 rounded-xl bg-rose-50 border-2 border-rose-400 text-rose-950 flex flex-col gap-2 animate-in slide-in-from-top-2">
@@ -582,7 +578,7 @@ export const TrainingModal: React.FC<TrainingModalProps> = ({
           </div>
 
           {/* Dates & Auto Duration */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 p-3.5 bg-slate-50/70 rounded-xl border border-gray-200">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 p-3 sm:p-3.5 bg-slate-50/70 rounded-xl border border-gray-200">
             <div>
               <label className="block text-xs font-semibold text-gray-700 mb-1">
                 Start Date *
@@ -664,13 +660,13 @@ export const TrainingModal: React.FC<TrainingModalProps> = ({
 
           {/* Team Roles Assignment Section */}
           <div className="pt-2 border-t border-gray-200 space-y-3">
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between flex-wrap gap-1">
               <span className="text-xs font-bold uppercase tracking-wider text-gray-600 flex items-center gap-1.5">
-                <Users className="w-3.5 h-3.5 text-blue-600" />
-                <span>Resource Assignment (Live Availability Checked)</span>
+                <Users className="w-3.5 h-3.5 text-blue-600 shrink-0" />
+                <span>Resource Assignment</span>
               </span>
               <span className="text-[11px] text-gray-400">
-                Shows 🟢 Available / 🔴 Busy in real time
+                🟢 Available / 🔴 Busy in real time
               </span>
             </div>
 
@@ -687,7 +683,7 @@ export const TrainingModal: React.FC<TrainingModalProps> = ({
           {/* Recurring Options */}
           {!isEdit && (
             <div className="p-3 bg-gray-50 rounded-xl border border-gray-200">
-              <div className="flex items-center justify-between mb-2">
+              <div className="flex items-center justify-between mb-2 flex-wrap gap-2">
                 <span className="text-xs font-semibold text-gray-700 flex items-center gap-1.5">
                   <Repeat className="w-3.5 h-3.5 text-indigo-600" />
                   <span>Repeat Training</span>
@@ -703,7 +699,7 @@ export const TrainingModal: React.FC<TrainingModalProps> = ({
               </div>
 
               {repeatMode === 'Weekly' && (
-                <div className="flex items-center gap-2 text-xs text-gray-600 mt-2">
+                <div className="flex items-center gap-2 text-xs text-gray-600 mt-2 flex-wrap">
                   <span>Repeat every week for</span>
                   <input
                     type="number"
@@ -733,7 +729,7 @@ export const TrainingModal: React.FC<TrainingModalProps> = ({
         </form>
 
         {/* Footer Actions */}
-        <div className="px-6 py-3.5 border-t border-gray-200 bg-gray-50 flex items-center justify-between flex-wrap gap-2">
+        <div className="px-4 sm:px-6 py-3 sm:py-3.5 border-t border-gray-200 bg-gray-50 flex items-center justify-between flex-wrap gap-2 shrink-0">
           {isEdit && editSessionId ? (
             confirmDelete ? (
               <div className="flex items-center gap-2 animate-in fade-in">
@@ -781,11 +777,11 @@ export const TrainingModal: React.FC<TrainingModalProps> = ({
             </div>
           )}
 
-          <div className="flex items-center gap-2.5">
+          <div className="flex items-center gap-2 ml-auto">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 border border-gray-300 rounded-lg text-xs font-semibold text-gray-700 hover:bg-gray-100 transition-colors cursor-pointer"
+              className="px-3.5 sm:px-4 py-2 border border-gray-300 rounded-lg text-xs font-semibold text-gray-700 hover:bg-gray-100 transition-colors cursor-pointer"
             >
               Cancel
             </button>
@@ -793,7 +789,7 @@ export const TrainingModal: React.FC<TrainingModalProps> = ({
               type="button"
               onClick={handleSubmit}
               disabled={currentValidationConflicts.length > 0}
-              className={`px-5 py-2 rounded-lg text-xs font-semibold text-white shadow-xs transition-all cursor-pointer ${
+              className={`px-4 sm:px-5 py-2 rounded-lg text-xs font-semibold text-white shadow-xs transition-all cursor-pointer ${
                 currentValidationConflicts.length > 0
                   ? 'bg-gray-400 cursor-not-allowed opacity-60'
                   : 'bg-blue-600 hover:bg-blue-700 active:scale-95'

@@ -6,9 +6,7 @@ import {
   EyeOff,
   ArrowRight,
   ShieldCheck,
-  KeyRound,
   AlertCircle,
-  Sparkles,
 } from 'lucide-react';
 
 interface PasswordGateScreenProps {
@@ -34,34 +32,34 @@ export const PasswordGateScreen: React.FC<PasswordGateScreenProps> = ({
   };
 
   return (
-    <div className="min-h-screen w-screen bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 flex items-center justify-center p-4 select-none">
+    <div className="min-h-dvh w-full bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 flex items-center justify-center p-4 select-none">
       <div className="w-full max-w-md bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden animate-in fade-in zoom-in-95 duration-300">
         {/* Top Header Banner */}
-        <div className="bg-gradient-to-r from-blue-700 via-blue-600 to-indigo-700 p-8 text-white text-center relative overflow-hidden">
+        <div className="bg-gradient-to-r from-blue-700 via-blue-600 to-indigo-700 p-6 sm:p-8 text-white text-center relative overflow-hidden">
           {/* Subtle background glow */}
           <div className="absolute -top-12 -right-12 w-36 h-36 bg-blue-400/20 rounded-full blur-2xl pointer-events-none" />
           <div className="absolute -bottom-8 -left-8 w-32 h-32 bg-indigo-500/20 rounded-full blur-xl pointer-events-none" />
 
           {/* Logo Badge */}
-          <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white shadow-lg">
-            <CalendarCheck className="w-9 h-9 text-blue-200" />
+          <div className="w-14 h-14 sm:w-16 sm:h-16 mx-auto mb-3 sm:mb-4 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white shadow-lg">
+            <CalendarCheck className="w-8 h-8 sm:w-9 sm:h-9 text-blue-200" />
           </div>
 
-          <h1 className="text-xl font-extrabold tracking-tight text-white leading-tight">
+          <h1 className="text-lg sm:text-xl font-extrabold tracking-tight text-white leading-tight">
             Training Resource Planner
           </h1>
           <p className="text-xs text-blue-100 font-medium mt-1">
             Professional Training Scheduling &amp; Resource Management
           </p>
 
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-800/60 border border-blue-400/30 text-[11px] font-semibold text-blue-200 mt-4">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-800/60 border border-blue-400/30 text-[11px] font-semibold text-blue-200 mt-3 sm:mt-4">
             <Lock className="w-3 h-3 text-blue-300" />
             <span>Protected Access Portal</span>
           </div>
         </div>
 
         {/* Form Body */}
-        <div className="p-7">
+        <div className="p-5 sm:p-7">
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <div className="flex items-center justify-between mb-1.5">
@@ -106,7 +104,7 @@ export const PasswordGateScreen: React.FC<PasswordGateScreenProps> = ({
             </div>
 
             {/* Remember device checkbox */}
-            <div className="flex items-center justify-between pt-1">
+            <div className="flex items-center justify-between pt-1 flex-wrap gap-2">
               <label className="flex items-center gap-2 cursor-pointer text-xs text-gray-600 font-medium">
                 <input
                   type="checkbox"
@@ -131,7 +129,7 @@ export const PasswordGateScreen: React.FC<PasswordGateScreenProps> = ({
           </form>
 
           {/* Quick Notice Info */}
-          <div className="mt-6 pt-5 border-t border-gray-100 flex items-start gap-2.5 text-xs text-gray-500">
+          <div className="mt-5 sm:mt-6 pt-4 sm:pt-5 border-t border-gray-100 flex items-start gap-2.5 text-xs text-gray-500">
             <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
             <p className="leading-snug text-[11px]">
               Equipped with a deterministic scheduling engine enforcing the 1-person-1-training-per-day rule. Authorized personnel only.

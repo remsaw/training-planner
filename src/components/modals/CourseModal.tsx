@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { usePlanner } from '../../context/PlannerContext';
-import { Course } from '../../types';
 import { X, BookPlus, BookOpen } from 'lucide-react';
 
 interface CourseModalProps {
@@ -75,9 +74,9 @@ export const CourseModal: React.FC<CourseModalProps> = ({ isOpen, onClose, cours
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto animate-in fade-in duration-150">
-      <div className="bg-white rounded-2xl shadow-2xl border border-gray-200 w-full max-w-md overflow-hidden animate-in zoom-in-95 duration-150">
-        <div className="px-6 py-4 border-b border-gray-200 flex items-center justify-between bg-slate-50">
+    <div className="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-2.5 sm:p-4 overflow-y-auto animate-in fade-in duration-150">
+      <div className="bg-white rounded-2xl shadow-2xl border border-gray-200 w-full max-w-md max-h-[92dvh] flex flex-col overflow-hidden animate-in zoom-in-95 duration-150">
+        <div className="px-4 sm:px-6 py-3.5 sm:py-4 border-b border-gray-200 flex items-center justify-between bg-slate-50 shrink-0">
           <div className="flex items-center gap-2">
             {isEdit ? <BookOpen className="w-5 h-5 text-blue-600" /> : <BookPlus className="w-5 h-5 text-blue-600" />}
             <h2 className="text-base font-bold text-gray-900">
@@ -92,7 +91,7 @@ export const CourseModal: React.FC<CourseModalProps> = ({ isOpen, onClose, cours
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="p-6 space-y-3.5 text-xs">
+        <form onSubmit={handleSubmit} className="p-4 sm:p-6 flex-1 overflow-y-auto space-y-3.5 text-xs">
           <div>
             <label className="block text-xs font-semibold text-gray-700 mb-1">Course Name *</label>
             <input
@@ -105,7 +104,7 @@ export const CourseModal: React.FC<CourseModalProps> = ({ isOpen, onClose, cours
             />
           </div>
 
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
               <label className="block text-xs font-semibold text-gray-700 mb-1">Course Code</label>
               <input
@@ -170,12 +169,12 @@ export const CourseModal: React.FC<CourseModalProps> = ({ isOpen, onClose, cours
             />
           </div>
 
-          <div className="pt-2 border-t border-gray-100 flex items-center justify-between">
+          <div className="pt-2 border-t border-gray-100 flex items-center justify-between gap-2">
             <div>
               <span className="font-semibold text-gray-800 text-xs block">Active Course</span>
               <span className="text-[11px] text-gray-500">Available for new scheduling events</span>
             </div>
-            <label className="relative inline-flex items-center cursor-pointer">
+            <label className="relative inline-flex items-center cursor-pointer shrink-0">
               <input
                 type="checkbox"
                 checked={active}
