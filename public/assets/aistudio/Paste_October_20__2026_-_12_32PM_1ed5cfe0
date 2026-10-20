@@ -1,0 +1,2040 @@
+# BUILD A PROFESSIONAL TRAINING RESOURCE PLANNER
+
+Build a complete, functional, professional web application called:
+
+# Training Resource Planner
+
+Subtitle:
+
+**Professional Training Scheduling & Resource Management**
+
+The application is designed to manage and visualize training courses and the people assigned to them.
+
+The primary purpose is:
+
+> **To visually schedule training courses, assign people by role, immediately identify availability, and prevent a person from being assigned to more than one training on the same date.**
+
+This application is a **visual training resource scheduling system**.
+
+It is NOT:
+
+- An HR system
+- An LMS
+- An attendance system
+- A payroll system
+- A performance management system
+
+The most important part of the application is the **professional visual calendar**.
+
+---
+
+# 1. NO LOGIN
+
+Do NOT create:
+
+- Login
+- Signup
+- Password
+- Authentication
+- User accounts
+- Permission management
+
+The application should open directly to the main Calendar.
+
+---
+
+# 2. APPLICATION STRUCTURE
+
+Create a professional sidebar navigation:
+
+📅 **Calendar**
+
+👥 **People**
+
+📚 **Courses**
+
+⚠️ **Conflicts**
+
+📊 **Reports**
+
+⚙️ **Settings**
+
+The default page must be:
+
+**Calendar**
+
+---
+
+# 3. PROFESSIONAL UI / UX
+
+The application must look like a polished commercial scheduling application.
+
+Design inspiration:
+
+- Google Calendar
+- Microsoft Outlook Calendar
+- Professional resource planning systems
+- Modern SaaS dashboards
+
+Do NOT copy any existing product exactly.
+
+Use a clean enterprise design appropriate for:
+
+**Healthcare Training / Medical Education / Professional Development**
+
+Visual characteristics:
+
+- Clean light background
+- Professional blue primary color
+- Neutral gray borders
+- White cards
+- Rounded corners
+- Subtle shadows
+- Excellent typography
+- Clear spacing
+- Strong visual hierarchy
+- Smooth interactions
+- Professional icons
+- Compact but highly readable calendar
+
+Do not make it look like a basic CRUD application.
+
+The Calendar must be the visual centerpiece.
+
+---
+
+# 4. LANGUAGE
+
+Primary language:
+
+**English**
+
+Prepare the architecture so Arabic can be added later.
+
+Initial layout:
+
+**LTR**
+
+Use clear professional terminology.
+
+---
+
+# 5. MAIN CALENDAR
+
+The main page must open directly to:
+
+# Training Calendar
+
+Subtitle:
+
+**Visual Training Schedule & Resource Availability**
+
+At the top create a professional calendar toolbar.
+
+Left:
+
+**Today**
+
+**‹ Previous**
+
+**Next ›**
+
+Current period:
+
+**October 2026**
+
+Right:
+
+**Day**
+
+**Week**
+
+**Month**
+
+Then:
+
+🔍 Search
+
+Filter
+
+➕ **Add Training**
+
+---
+
+# 6. CALENDAR VIEWS
+
+Implement:
+
+### Resource Day
+
+### Resource Week
+
+### Month
+
+The default view should be:
+
+**Resource Week**
+
+The calendar must be designed as a **resource scheduling calendar**, not only as a normal monthly calendar.
+
+---
+
+# 7. RESOURCE DAY VIEW
+
+This is the most important detailed scheduling view.
+
+People are resources.
+
+Each person appears as a vertical resource column.
+
+Time is displayed horizontally.
+
+Example:
+
+```text
+TIME       DR. AHMED        MOHAMED          SARA          MAHMOUD
+
+08:00
+
+09:00
+
+10:00
+
+11:00
+
+12:00
+
+13:00
+
+14:00
+
+15:00
+
+16:00
+
+17:00       ┌────────────┐
+             │ ICD-11     │
+             │ Lecturer   │
+             │ 17–20      │
+             └────────────┘
+
+18:00                         ┌────────────┐
+                              │ Power BI   │
+                              │ Supervisor │
+                              │ 18–21      │
+                              └────────────┘
+
+19:00
+
+20:00
+```
+
+The calendar must support:
+
+- Horizontal scrolling
+- Vertical scrolling
+- Sticky resource headers
+- Sticky time column
+- Clear time grid
+- 30-minute intervals
+- Smooth scrolling
+
+---
+
+# 8. RESOURCE WEEK VIEW
+
+Show:
+
+- People
+- Days
+- Training assignments
+
+The user should be able to quickly see which people are occupied on which days.
+
+Example:
+
+```text
+                MON 26       TUE 27       WED 28       THU 29
+
+Ahmed           ICD-11       ICD-11       ICD-11       ICD-11
+
+Mohamed         ICD-11       ICD-11       ICD-11       ICD-11
+
+Sara            Power BI     Power BI     —            —
+
+Mahmoud         —            AI           AI           —
+```
+
+A multi-day course must appear visually as ONE continuous event across its date range.
+
+---
+
+# 9. MONTH VIEW
+
+Create a polished traditional calendar.
+
+Example:
+
+```text
+October 2026
+
+MON        TUE        WED        THU        FRI
+
+26         27         28         29         30
+
+┌───────────────────────────────────────────────┐
+│ ICD-11 Coding                                 │
+│ 26–30 Oct                                     │
+└───────────────────────────────────────────────┘
+```
+
+Multi-day events must visually span their date range whenever possible.
+
+---
+
+# 10. PEOPLE / RESOURCES
+
+Create a People database.
+
+Each person contains:
+
+```text
+ID
+Full Name
+Department
+Role
+Email
+Phone
+Active
+```
+
+Available roles:
+
+🎓 **Lecturer**
+
+👁 **Supervisor**
+
+💻 **Technical**
+
+A person may have more than one role if needed.
+
+---
+
+# 11. ADD PERSON
+
+Create a highly visible button:
+
+# + Add Person
+
+Open a professional modal.
+
+Fields:
+
+### Full Name
+Required
+
+### Employee ID
+Optional
+
+### Department
+Optional
+
+### Role
+Required
+
+Options:
+
+- Lecturer
+- Supervisor
+- Technical
+
+### Email
+Optional
+
+### Phone
+Optional
+
+### Active
+Toggle
+
+Buttons:
+
+**Cancel**
+
+**Save Person**
+
+After saving, the person must immediately appear in:
+
+- People
+- Calendar
+- Assignment dropdowns
+- Availability checks
+
+---
+
+# 12. PEOPLE PAGE
+
+Create:
+
+# People
+
+Display a professional table.
+
+Columns:
+
+| Name | Department | Role | Status | Training Count | Actions |
+|---|---|---|---|---|---|
+
+Example:
+
+**Dr. Ahmed Mohamed**
+
+🎓 Lecturer
+
+🟢 Available
+
+8 Trainings
+
+Actions:
+
+**View Schedule**
+
+**Edit**
+
+**Deactivate**
+
+---
+
+# 13. EDIT PERSON
+
+Allow editing:
+
+- Name
+- Employee ID
+- Department
+- Role
+- Email
+- Phone
+- Active status
+
+Changing the person's name must automatically update all calendar displays.
+
+Do not break historical assignments.
+
+---
+
+# 14. DELETE / DEACTIVATE PERSON
+
+If a person has historical or current training assignments:
+
+Do NOT permanently delete them.
+
+Instead provide:
+
+**Deactivate Person**
+
+Inactive people:
+
+- Cannot be assigned to new training
+- Remain visible in historical training
+- Remain visible in reports
+
+---
+
+# 15. COURSES
+
+Create a separate:
+
+# Courses
+
+page.
+
+A Course is the training program definition.
+
+A Training Event is a scheduled occurrence of that course.
+
+For example:
+
+Course:
+
+**ICD-11 Coding**
+
+Training Event:
+
+**26–30 October 2026**
+
+---
+
+# 16. ADD COURSE
+
+Create:
+
+# + Add Course
+
+Fields:
+
+### Course Name
+Required
+
+### Course Code
+Optional
+
+### Category
+Optional
+
+### Description
+Optional
+
+### Default Duration
+Optional
+
+### Active
+Toggle
+
+Example:
+
+Course Name:
+
+**ICD-11 Coding**
+
+Course Code:
+
+**ICD11-01**
+
+Category:
+
+**Health Informatics**
+
+---
+
+# 17. COURSE LIST
+
+Display:
+
+| Course | Code | Category | Scheduled Events | Status | Actions |
+|---|---|---|---|---|---|
+
+Actions:
+
+**Schedule**
+
+**Edit**
+
+**Delete**
+
+---
+
+# 18. ADD TRAINING
+
+Create:
+
+# + Add Training
+
+This creates a scheduled Training Event.
+
+A training must be created as ONE event even if it lasts multiple days.
+
+---
+
+# 19. TRAINING FORM
+
+Create a professional form with:
+
+### Course
+
+Searchable dropdown.
+
+Options:
+
+- Existing courses
+- **+ Create New Course**
+
+### Start Date
+
+Date picker
+
+### End Date
+
+Date picker
+
+### Start Time
+
+Time picker
+
+### End Time
+
+Time picker
+
+### Location
+
+Text input
+
+### Lecturer
+
+Searchable multi-select
+
+### Supervisor
+
+Searchable multi-select
+
+### Technical
+
+Searchable multi-select
+
+### Notes
+
+Optional textarea
+
+Buttons:
+
+**Cancel**
+
+**Save Training**
+
+---
+
+# 20. IMPORTANT — MULTI-DAY TRAINING
+
+The user must NEVER be required to create one training record per day.
+
+Example:
+
+**ICD-11 Coding**
+
+Start Date:
+
+26 October 2026
+
+End Date:
+
+30 October 2026
+
+Start Time:
+
+09:00
+
+End Time:
+
+14:00
+
+The user saves this ONCE.
+
+The system creates ONE Training Event.
+
+It automatically understands that the training occupies:
+
+26 October
+
+27 October
+
+28 October
+
+29 October
+
+30 October
+
+---
+
+# 21. TRAINING DATA MODEL
+
+Store the training as ONE database record.
+
+Example:
+
+```text
+{
+  id: "training_001",
+  courseId: "course_001",
+  startDate: "2026-10-26",
+  endDate: "2026-10-30",
+  startTime: "09:00",
+  endTime: "14:00",
+  location: "Training Hall 1",
+  lecturerIds: ["person_001"],
+  supervisorIds: ["person_002"],
+  technicalIds: ["person_003"],
+  notes: ""
+}
+```
+
+Do NOT create five separate records for the five days.
+
+---
+
+# 22. CORE BUSINESS RULE
+
+The most important rule in the application is:
+
+# ONE PERSON = ONE TRAINING PER CALENDAR DAY
+
+A person cannot be assigned to more than one training on the same calendar date.
+
+This rule applies regardless of:
+
+- Training time
+- Role
+- Location
+
+Example:
+
+Existing:
+
+**ICD-11 Coding**
+
+26 October
+
+09:00–12:00
+
+Role:
+
+Lecturer
+
+Attempt:
+
+**Power BI**
+
+26 October
+
+14:00–17:00
+
+Role:
+
+Technical
+
+Result:
+
+🔴 **NOT ALLOWED**
+
+Even though there is NO time overlap.
+
+Reason:
+
+**Same person + same date**
+
+---
+
+# 23. MULTI-DAY CONFLICT
+
+If Ahmed is assigned to:
+
+**ICD-11 Coding**
+
+26–30 October
+
+he is automatically unavailable for another training on:
+
+26 ❌
+
+27 ❌
+
+28 ❌
+
+29 ❌
+
+30 ❌
+
+He becomes available again:
+
+31 October 🟢
+
+---
+
+# 24. DATE RANGE CONFLICT LOGIC
+
+A conflict exists when:
+
+```text
+existingStartDate <= newEndDate
+AND
+existingEndDate >= newStartDate
+AND
+personId is the same
+```
+
+If true:
+
+🔴 CONFLICT
+
+This is the PRIMARY scheduling rule.
+
+---
+
+# 25. TIME OVERLAP RULE
+
+Also implement time overlap detection:
+
+```text
+existingStartTime < newEndTime
+AND
+existingEndTime > newStartTime
+```
+
+But the same-day rule has priority.
+
+Therefore:
+
+Same date + different times:
+
+🔴 Conflict
+
+Same date + overlapping times:
+
+🔴 Conflict
+
+Different dates:
+
+🟢 Allowed
+
+provided the date ranges do not overlap.
+
+---
+
+# 26. AVAILABILITY STATUS
+
+When selecting people for a training, show their availability.
+
+Example:
+
+### Lecturer
+
+🟢 Dr. Ahmed — Available
+
+🔴 Dr. Ali — Busy
+
+**ICD-11 Coding**
+
+26–30 October
+
+🟢 Dr. Sara — Available
+
+The user should immediately understand why someone is unavailable.
+
+---
+
+# 27. LIVE CONFLICT DETECTION
+
+Do not wait for Save.
+
+Run availability checks immediately when:
+
+- Start Date changes
+- End Date changes
+- Start Time changes
+- End Time changes
+- Lecturer selected
+- Supervisor selected
+- Technical selected
+- Training moved
+- Training resized
+- Training duplicated
+
+---
+
+# 28. CONFLICT WARNING
+
+When the user selects a busy person, display:
+
+# 🔴 Scheduling Conflict
+
+**Dr. Ahmed Mohamed is already assigned to another training during this period.**
+
+Existing:
+
+**ICD-11 Coding**
+
+26–30 October
+
+09:00–14:00
+
+Role:
+
+Lecturer
+
+Requested:
+
+**Power BI**
+
+28 October
+
+17:00–20:00
+
+Role:
+
+Supervisor
+
+Conflict:
+
+**The date ranges overlap.**
+
+Buttons:
+
+**Choose Another Person**
+
+**Change Training Dates**
+
+The conflicting assignment must NOT be saved.
+
+---
+
+# 29. PERSON SELECTION
+
+Use searchable professional multi-select controls.
+
+Example:
+
+```text
+Lecturer
+
+🟢 Dr. Ahmed Mohamed
+Available
+
+🔴 Dr. Ali Hassan
+Busy
+ICD-11 | 26–30 Oct
+
+🟢 Dr. Sara Ahmed
+Available
+```
+
+A person with a same-date conflict should be disabled.
+
+---
+
+# 30. CALENDAR BLOCKS
+
+Each training event should appear as a professional block.
+
+Example:
+
+```text
+┌───────────────────────────────┐
+│ ICD-11 Coding                 │
+│ 26–30 Oct                     │
+│ 09:00–14:00                   │
+│ 🎓 Dr. Ahmed                  │
+└───────────────────────────────┘
+```
+
+Show:
+
+- Course name
+- Date range
+- Time
+- Assigned people or role
+- Location when space allows
+
+---
+
+# 31. ROLE VISUAL SYSTEM
+
+Use consistent role indicators:
+
+🎓 Lecturer
+
+👁 Supervisor
+
+💻 Technical
+
+Suggested visual colors:
+
+Lecturer → Blue
+
+Supervisor → Green
+
+Technical → Orange
+
+Conflict → Red
+
+Warning → Amber
+
+Do not rely only on color.
+
+Always show icon and text.
+
+---
+
+# 32. TRAINING DETAILS
+
+Clicking a training block opens a professional side panel or modal.
+
+Show:
+
+# Training Details
+
+### Course
+
+ICD-11 Coding
+
+### Training Period
+
+26 October → 30 October 2026
+
+### Duration
+
+5 Days
+
+### Daily Time
+
+09:00 → 14:00
+
+### Location
+
+Training Hall 1
+
+### Team
+
+🎓 Lecturer
+
+Dr. Ahmed
+
+👁 Supervisor
+
+Mohamed
+
+💻 Technical
+
+Sara
+
+Buttons:
+
+**Edit**
+
+**Duplicate**
+
+**Delete**
+
+---
+
+# 33. AUTOMATIC DURATION
+
+Calculate automatically:
+
+Start Date → End Date
+
+Example:
+
+26 Oct → 30 Oct
+
+Display:
+
+**5 Days**
+
+The user must not manually enter duration.
+
+---
+
+# 34. EDIT TRAINING
+
+Allow editing:
+
+- Course
+- Start Date
+- End Date
+- Start Time
+- End Time
+- Location
+- Lecturer
+- Supervisor
+- Technical
+- Notes
+
+Run conflict detection immediately after changes.
+
+IMPORTANT:
+
+When editing an existing training, exclude the current training itself from conflict detection.
+
+---
+
+# 35. DUPLICATE TRAINING
+
+Add:
+
+**Duplicate**
+
+When duplicating:
+
+Copy:
+
+- Course
+- Duration
+- Time
+- Location
+- People
+- Notes
+
+Ask the user for:
+
+**New Start Date**
+
+Automatically calculate the new End Date based on the original duration.
+
+Example:
+
+Original:
+
+26–30 October
+
+5 Days
+
+New Start:
+
+10 November
+
+Automatically create:
+
+10–14 November
+
+Then run conflict detection.
+
+---
+
+# 36. DRAG & DROP
+
+Implement professional drag-and-drop scheduling.
+
+Users can drag a training event to another date.
+
+When moving a multi-day training:
+
+Move the ENTIRE date range.
+
+Example:
+
+26–30 October
+
+Move forward 7 days:
+
+2–6 November
+
+Do NOT move individual days separately.
+
+Before committing the move:
+
+Run conflict detection for every assigned person.
+
+If any conflict exists:
+
+🔴 Reject the move
+
+Return the training to its original position.
+
+Show:
+
+**Scheduling Conflict**
+
+---
+
+# 37. RESIZE TRAINING
+
+Allow users to resize a training event to change its End Date.
+
+Example:
+
+26–30 October
+
+Resize to:
+
+26 October–2 November
+
+Run conflict detection immediately.
+
+If the extended period creates a conflict:
+
+🔴 Reject the resize.
+
+---
+
+# 38. RECURRING TRAINING
+
+Keep recurring training separate from multi-day training.
+
+Allow:
+
+**Repeat Training**
+
+Options:
+
+- None
+- Daily
+- Weekly
+- Custom
+
+Example:
+
+Every Thursday for 4 weeks.
+
+Each generated occurrence must be checked for conflicts.
+
+If one occurrence conflicts:
+
+Show exactly which date conflicts.
+
+Do not silently create the conflict.
+
+---
+
+# 39. PEOPLE SCHEDULE
+
+Clicking a person should open:
+
+# Person Schedule
+
+Show:
+
+Name
+
+Role
+
+Department
+
+Then show all training assignments.
+
+Statistics:
+
+**Training Count**
+
+**Training Days**
+
+**Training Hours**
+
+**Current Status**
+
+Example:
+
+🟢 Available
+
+or
+
+🔴 Busy Today
+
+---
+
+# 40. AVAILABILITY SEARCH
+
+Create a feature:
+
+# Check Availability
+
+The user enters:
+
+Date / Date Range
+
+Start Time
+
+End Time
+
+Role
+
+Then show available people.
+
+Example:
+
+### Available Lecturers
+
+🟢 Dr. Ahmed
+
+🟢 Dr. Sara
+
+### Busy Lecturers
+
+🔴 Dr. Ali
+
+ICD-11
+
+26–30 Oct
+
+This feature must respect the one-training-per-day rule.
+
+---
+
+# 41. SEARCH
+
+Global search should search:
+
+- People
+- Courses
+- Training sessions
+- Locations
+
+Example:
+
+Search:
+
+**Ahmed**
+
+Results:
+
+### People
+
+Dr. Ahmed Mohamed
+
+### Training
+
+ICD-11 Coding
+
+Power BI
+
+---
+
+# 42. FILTERS
+
+Add professional filters:
+
+### Role
+
+All
+
+Lecturer
+
+Supervisor
+
+Technical
+
+### Person
+
+All
+
+### Course
+
+All
+
+### Location
+
+All
+
+### Status
+
+Available
+
+Busy
+
+Conflict
+
+Filters must update instantly.
+
+---
+
+# 43. CONFLICTS PAGE
+
+Create:
+
+# Conflicts
+
+Show all detected conflicts.
+
+Columns:
+
+| Date/Period | Person | Existing Training | Requested Training | Role | Status |
+|---|---|---|---|---|---|
+
+Conflict types:
+
+🔴 Same-Day Conflict
+
+🔴 Date Range Conflict
+
+🔴 Time Overlap
+
+Clicking a conflict should take the user directly to the relevant calendar area.
+
+---
+
+# 44. DASHBOARD KPI CARDS
+
+At the top of Calendar show:
+
+### Today's Trainings
+
+### This Week
+
+### Active People
+
+### Active Courses
+
+### Conflicts
+
+Example:
+
+```text
+Today's Trainings
+4
+
+This Week
+12
+
+Active People
+38
+
+Active Courses
+15
+
+Conflicts
+2 ⚠
+```
+
+The Conflicts card should be prominent when conflicts exist.
+
+---
+
+# 45. CURRENT TIME
+
+In Day and Week views show a dynamic horizontal:
+
+**Now**
+
+line.
+
+Update it automatically.
+
+---
+
+# 46. TODAY
+
+Highlight today's date.
+
+Use a subtle professional visual indicator.
+
+---
+
+# 47. TIME GRID
+
+Use:
+
+30-minute increments.
+
+Default working hours:
+
+**08:00 – 22:00**
+
+Allow the user to configure working hours later through Settings.
+
+---
+
+# 48. WEEKENDS
+
+Visually distinguish weekends.
+
+Do not make them dominant.
+
+For multi-day training, treat the date range as continuous by default.
+
+---
+
+# 49. IMPORT PEOPLE
+
+Create:
+
+**Import People**
+
+Accept CSV.
+
+Columns:
+
+```text
+ID
+Name
+Department
+Role
+Email
+Phone
+Active
+```
+
+Validate imported data.
+
+---
+
+# 50. IMPORT COURSES
+
+Create:
+
+**Import Courses**
+
+Accept CSV.
+
+Columns:
+
+```text
+Course ID
+Course Name
+Course Code
+Category
+Description
+Active
+```
+
+---
+
+# 51. IMPORT TRAINING
+
+Create:
+
+**Import Training**
+
+Accept CSV.
+
+Columns:
+
+```text
+Training ID
+Course ID
+Start Date
+End Date
+Start Time
+End Time
+Location
+Lecturer IDs
+Supervisor IDs
+Technical IDs
+Notes
+```
+
+After importing:
+
+Run the complete conflict detection engine.
+
+If conflicts are found:
+
+Display a conflict report.
+
+---
+
+# 52. EXPORT
+
+Create:
+
+**Export Calendar**
+
+Export the current schedule to CSV.
+
+Create:
+
+**Export People**
+
+Create:
+
+**Export Courses**
+
+Create:
+
+**Export Conflicts**
+
+---
+
+# 53. DATABASE
+
+Use Firebase Firestore for persistent storage.
+
+Collections:
+
+```text
+people
+courses
+trainingSessions
+```
+
+Training sessions must store person IDs.
+
+Never rely on storing only names.
+
+Example:
+
+```text
+{
+  courseId: "course_001",
+  startDate: "2026-10-26",
+  endDate: "2026-10-30",
+  startTime: "09:00",
+  endTime: "14:00",
+  location: "Training Hall 1",
+  lecturerIds: ["person_001"],
+  supervisorIds: ["person_002"],
+  technicalIds: ["person_003"]
+}
+```
+
+---
+
+# 54. DEMO DATA
+
+The application must NOT open empty.
+
+Create realistic demo data.
+
+### 10 People
+
+4 Lecturers
+
+3 Supervisors
+
+3 Technical
+
+### 8 Courses
+
+Use:
+
+- ICD-11 Coding
+- Power BI for Healthcare
+- AI in Healthcare
+- Research Methods
+- SPSS for Healthcare Research
+- Python for Data Analytics
+- Health Informatics Fundamentals
+- Healthcare Data Analytics
+
+Create several training events across:
+
+October 2026
+
+November 2026
+
+Include:
+
+- Single-day training
+- Multi-day training
+- Different roles
+- At least one intentional conflict
+
+Clearly identify demo data.
+
+---
+
+# 55. IMPORTANT — CONFLICT ENGINE
+
+The conflict engine must be deterministic.
+
+Do NOT use AI to decide whether someone is available.
+
+The application logic must determine availability.
+
+For every selected person:
+
+1. Find all existing training events assigned to that person.
+2. Compare the new training date range with existing date ranges.
+3. If the ranges overlap:
+   - Conflict.
+4. If the ranges do not overlap:
+   - Available.
+
+Time overlap should be an additional validation layer.
+
+---
+
+# 56. CONFLICT ALGORITHM
+
+Primary rule:
+
+```text
+existingStartDate <= newEndDate
+AND
+existingEndDate >= newStartDate
+AND
+personId is the same
+```
+
+Result:
+
+```text
+CONFLICT
+```
+
+Additional time validation:
+
+```text
+existingStartTime < newEndTime
+AND
+existingEndTime > newStartTime
+```
+
+But the application must still reject same-date assignments even if times do not overlap.
+
+---
+
+# 57. SPECIAL CASE — SAME TRAINING
+
+When editing a training:
+
+Exclude the current training ID from the conflict search.
+
+Otherwise the application would incorrectly detect itself as a conflict.
+
+---
+
+# 58. ERROR HANDLING
+
+If End Date is before Start Date:
+
+🔴
+
+**Invalid Date Range**
+
+"End date must be on or after start date."
+
+If End Time is before Start Time:
+
+🔴
+
+**Invalid Time**
+
+"End time must be later than start time."
+
+If no course:
+
+⚠
+
+**Course Required**
+
+If no assigned person:
+
+⚠
+
+**Resource Required**
+
+If conflict:
+
+🔴
+
+**Scheduling Conflict**
+
+---
+
+# 59. EMPTY STATES
+
+Calendar with no events:
+
+**No training scheduled**
+
+Button:
+
+**+ Add Training**
+
+People with no training:
+
+**No training assignments**
+
+Courses with no sessions:
+
+**No scheduled sessions**
+
+---
+
+# 60. MOBILE
+
+Desktop is the primary target.
+
+Tablet must remain usable.
+
+On mobile:
+
+Do NOT simply shrink the desktop calendar.
+
+Transform into:
+
+- Agenda view
+- Daily schedule
+- Person schedule
+- Training cards
+
+---
+
+# 61. PERFORMANCE
+
+The interface should feel instant.
+
+Avoid unnecessary page reloads.
+
+Use efficient filtering.
+
+Use local calculations for immediate availability checks where possible.
+
+Database updates should be asynchronous and reliable.
+
+---
+
+# 62. ACCESSIBILITY
+
+Use:
+
+- Clear contrast
+- Keyboard-friendly forms
+- Visible focus states
+- Tooltips
+- Descriptive labels
+- Accessible buttons
+
+Do not rely only on color to communicate conflicts.
+
+---
+
+# 63. FUTURE AI ASSISTANT
+
+Prepare the architecture for an optional AI assistant.
+
+Future examples:
+
+> "Who is available as a lecturer next Thursday?"
+
+> "Show me all conflicts this month."
+
+> "Who has the most training assignments?"
+
+> "Find three available lecturers for ICD-11 from 26 to 30 October."
+
+The AI must query structured application data.
+
+AI must NOT replace deterministic conflict detection.
+
+---
+
+# 64. FINAL ACCEPTANCE TESTS
+
+Before considering the application complete, test ALL of these.
+
+### TEST 1 — Same Day, Different Time
+
+Ahmed:
+
+ICD-11
+
+26 October
+
+09:00–12:00
+
+Attempt:
+
+Power BI
+
+26 October
+
+14:00–17:00
+
+Expected:
+
+🔴 CONFLICT
+
+Cannot save.
+
+---
+
+### TEST 2 — Same Day, Overlapping Time
+
+Ahmed:
+
+09:00–12:00
+
+New:
+
+11:00–14:00
+
+Expected:
+
+🔴 CONFLICT
+
+---
+
+### TEST 3 — Different Date
+
+Existing:
+
+26 October
+
+New:
+
+27 October
+
+Expected:
+
+🟢 ALLOWED
+
+---
+
+### TEST 4 — Multi-Day Training
+
+Ahmed assigned to:
+
+ICD-11
+
+26–30 October
+
+Attempt:
+
+Power BI
+
+28 October
+
+Expected:
+
+🔴 CONFLICT
+
+---
+
+### TEST 5 — After Multi-Day Training
+
+Existing:
+
+ICD-11
+
+26–30 October
+
+New:
+
+Power BI
+
+31 October
+
+Expected:
+
+🟢 ALLOWED
+
+---
+
+### TEST 6 — Different Roles
+
+Ahmed:
+
+Lecturer
+
+26 October
+
+New:
+
+Technical
+
+26 October
+
+Expected:
+
+🔴 CONFLICT
+
+---
+
+### TEST 7 — Drag
+
+Move a training onto a date where an assigned person is already occupied.
+
+Expected:
+
+🔴 Reject movement.
+
+---
+
+### TEST 8 — Resize
+
+Extend a multi-day training into another training period.
+
+Expected:
+
+🔴 Reject resize.
+
+---
+
+### TEST 9 — Add Person
+
+Create:
+
+Dr. New Person
+
+Role:
+
+Lecturer
+
+Expected:
+
+Immediately available in Calendar and assignment lists.
+
+---
+
+### TEST 10 — Add Course
+
+Create:
+
+Advanced Healthcare Analytics
+
+Expected:
+
+Immediately available in Add Training.
+
+---
+
+### TEST 11 — Edit
+
+Edit an existing training without changing its date.
+
+Expected:
+
+No false self-conflict.
+
+---
+
+### TEST 12 — Duplicate
+
+Duplicate a five-day course.
+
+Expected:
+
+New date range automatically calculated from the original duration.
+
+Run conflict detection.
+
+---
+
+# 65. FINAL PRODUCT REQUIREMENT
+
+Build the application completely.
+
+Do NOT provide only a visual mockup.
+
+Actually implement:
+
+- Calendar
+- Day View
+- Week View
+- Month View
+- People
+- Courses
+- Add Person
+- Add Course
+- Add Training
+- Edit Training
+- Delete / Deactivate
+- Multi-day training
+- Date ranges
+- Resource assignment
+- Availability
+- Conflict detection
+- Drag & Drop
+- Resize
+- Duplicate
+- Recurring training
+- Search
+- Filters
+- Conflict page
+- Reports
+- Import
+- Export
+- Firestore persistence
+- Responsive design
+
+The most important user experience is:
+
+**Open Calendar → Add Training → Select Course → Select Date Range → Select People → Instantly see availability → Save.**
+
+The final application should feel like a polished professional:
+
+# TRAINING RESOURCE PLANNING PLATFORM
+
+not a simple CRUD application.
+
+Prioritize:
+
+1. Professional Calendar UX
+2. Easy course creation
+3. Easy person creation
+4. Multi-day training
+5. One-person-one-training-per-day rule
+6. Instant conflict detection
+7. Visual resource availability
+8. Drag-and-drop scheduling
+9. Clean professional design
+10. Reliable data persistence
