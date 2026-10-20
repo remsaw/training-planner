@@ -140,19 +140,19 @@ const LOCAL_STORAGE_PEOPLE = 'trp_people_v2';
 const LOCAL_STORAGE_COURSES = 'trp_courses_v2';
 const LOCAL_STORAGE_SESSIONS = 'trp_sessions_v2';
 const LOCAL_STORAGE_SETTINGS = 'trp_settings_v2';
-const LOCAL_STORAGE_PASSWORD = 'trp_password_v1';
+const LOCAL_STORAGE_PASSWORD = 'trp_password_v2';
 const LOCAL_STORAGE_GSHEETS_URL = 'trp_google_sheets_url_v1';
 const DEFAULT_GSHEETS_URL =
   'https://script.google.com/macros/s/AKfycbxMHeQ9xplb82kBw1ye67Mmlr1MRGhx-80gUURx8aFOoUE3-l2vJS7Ph7flPUKiugb0_g/exec';
-const SESSION_STORAGE_UNLOCKED = 'trp_unlocked_v1';
+const SESSION_STORAGE_UNLOCKED = 'trp_unlocked_v2';
 
 export const PlannerProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   // Security State (Password Gate)
   const [appPassword, setAppPasswordState] = useState<string>(() => {
     try {
-      return localStorage.getItem(LOCAL_STORAGE_PASSWORD) || 'admin2026';
+      return localStorage.getItem(LOCAL_STORAGE_PASSWORD) || 'Hitstc@2030';
     } catch {
-      return 'admin2026';
+      return 'Hitstc@2030';
     }
   });
 

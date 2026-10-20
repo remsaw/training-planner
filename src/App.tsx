@@ -108,7 +108,7 @@ const MainLayout: React.FC = () => {
   if (isLocked) {
     return (
       <>
-        <PasswordGateScreen onUnlock={unlockApp} defaultPassword={appPassword} />
+        <PasswordGateScreen onUnlock={unlockApp} />
         <ToastContainer />
       </>
     );

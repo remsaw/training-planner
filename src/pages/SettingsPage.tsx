@@ -315,7 +315,7 @@ export const SettingsPage: React.FC = () => {
             </button>
           </div>
           <p className="text-[11px] text-gray-500">
-            Default system password is <code className="bg-gray-100 px-1 py-0.5 rounded font-mono font-bold text-gray-800">admin2026</code>. When locked, users will be required to enter this password to view or modify schedules.
+            When locked, users will be required to enter this password to view or modify schedules.
           </p>
         </form>
       </div>

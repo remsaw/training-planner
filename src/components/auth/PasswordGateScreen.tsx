@@ -13,12 +13,10 @@ import {
 
 interface PasswordGateScreenProps {
   onUnlock: (password: string, remember: boolean) => boolean;
-  defaultPassword?: string;
 }
 
 export const PasswordGateScreen: React.FC<PasswordGateScreenProps> = ({
   onUnlock,
-  defaultPassword = 'admin2026',
 }) => {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -33,11 +31,6 @@ export const PasswordGateScreen: React.FC<PasswordGateScreenProps> = ({
     if (!success) {
       setError(true);
     }
-  };
-
-  const handleUseDefault = () => {
-    setPassword(defaultPassword);
-    setError(false);
   };
 
   return (
@@ -75,14 +68,6 @@ export const PasswordGateScreen: React.FC<PasswordGateScreenProps> = ({
                 <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider">
                   Access Password
                 </label>
-                <button
-                  type="button"
-                  onClick={handleUseDefault}
-                  className="text-[11px] font-semibold text-blue-600 hover:text-blue-800 transition-colors flex items-center gap-1 cursor-pointer"
-                >
-                  <KeyRound className="w-3 h-3" />
-                  <span>Use default ({defaultPassword})</span>
-                </button>
               </div>
 
               <div className="relative">
@@ -115,7 +100,7 @@ export const PasswordGateScreen: React.FC<PasswordGateScreenProps> = ({
               {error && (
                 <div className="flex items-center gap-1.5 text-rose-600 text-xs font-semibold mt-1.5 animate-in slide-in-from-top-1">
                   <AlertCircle className="w-3.5 h-3.5 shrink-0" />
-                  <span>Incorrect password. Default is: {defaultPassword}</span>
+                  <span>Incorrect password. Please try again.</span>
                 </div>
               )}
             </div>
@@ -149,7 +134,7 @@ export const PasswordGateScreen: React.FC<PasswordGateScreenProps> = ({
           <div className="mt-6 pt-5 border-t border-gray-100 flex items-start gap-2.5 text-xs text-gray-500">
             <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
             <p className="leading-snug text-[11px]">
-              Equipped with a deterministic scheduling engine enforcing the 1-person-1-training-per-day rule. Default password is <code className="bg-gray-100 px-1 py-0.5 rounded font-mono font-bold text-gray-800">{defaultPassword}</code>.
+              Equipped with a deterministic scheduling engine enforcing the 1-person-1-training-per-day rule. Authorized personnel only.
             </p>
           </div>
         </div>
