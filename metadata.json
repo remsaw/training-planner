@@ -1,0 +1,6 @@
+{
+  "name": "Training Resource Planner",
+  "description": "Professional Training Scheduling & Resource Management for visual scheduling, resource availability, and conflict prevention.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
