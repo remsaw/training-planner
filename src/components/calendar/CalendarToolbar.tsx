@@ -271,9 +271,12 @@ export const CalendarToolbar: React.FC<CalendarToolbarProps> = ({ onOpenAddTrain
                           className="w-full p-1.5 border border-gray-300 rounded-md bg-white text-xs"
                         >
                           <option value="All">All Roles</option>
-                          <option value="Lecturer">Lecturer (🎓)</option>
-                          <option value="Supervisor">Supervisor (👁)</option>
-                          <option value="Technical">Technical (💻)</option>
+                          <option value="محاضر">محاضر (🎓)</option>
+                          <option value="مشرف فنى">مشرف فنى (👁)</option>
+                          <option value="تقنى/ادارى">تقنى/ادارى (💻)</option>
+                          <option value="مسؤل مالى">مسؤل مالى (💰)</option>
+                          <option value="فنى اجهزة">فنى اجهزة (🔧)</option>
+                          <option value="تصوير وطباعة">تصوير وطباعة (🖨️)</option>
                         </select>
                       </div>
 

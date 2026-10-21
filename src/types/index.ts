@@ -1,4 +1,44 @@
-export type Role = 'Lecturer' | 'Supervisor' | 'Technical';
+export type Role =
+  | 'محاضر'
+  | 'مشرف فنى'
+  | 'تقنى/ادارى'
+  | 'مسؤل مالى'
+  | 'فنى اجهزة'
+  | 'تصوير وطباعة';
+
+export const ALL_ROLES: Role[] = [
+  'محاضر',
+  'مشرف فنى',
+  'تقنى/ادارى',
+  'مسؤل مالى',
+  'فنى اجهزة',
+  'تصوير وطباعة',
+];
+
+const LEGACY_ROLE_MAP: Record<string, Role> = {
+  Lecturer: 'محاضر',
+  Supervisor: 'مشرف فنى',
+  Technical: 'تقنى/ادارى',
+};
+
+export function normalizeRole(role: string): Role | null {
+  const trimmed = role.trim();
+  if ((ALL_ROLES as string[]).includes(trimmed)) {
+    return trimmed as Role;
+  }
+  if (LEGACY_ROLE_MAP[trimmed]) {
+    return LEGACY_ROLE_MAP[trimmed];
+  }
+  return null;
+}
+
+export function normalizeRoles(roles: unknown): Role[] {
+  if (!Array.isArray(roles)) return ['محاضر'];
+  const mapped = roles
+    .map((r) => (typeof r === 'string' ? normalizeRole(r) : null))
+    .filter((r): r is Role => r !== null);
+  return mapped.length > 0 ? Array.from(new Set(mapped)) : ['محاضر'];
+}
 
 export interface Person {
   id: string;
@@ -34,6 +74,9 @@ export interface TrainingSession {
   lecturerIds: string[];
   supervisorIds: string[];
   technicalIds: string[];
+  financialIds?: string[];
+  equipmentIds?: string[];
+  printingIds?: string[];
   notes?: string;
   recurringGroupId?: string;
   isDemo?: boolean;

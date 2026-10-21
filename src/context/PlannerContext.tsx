@@ -7,6 +7,7 @@ import {
   CalendarViewType,
   AppSettings,
   Role,
+  normalizeRoles,
 } from '../types';
 import { INITIAL_PEOPLE, INITIAL_COURSES, INITIAL_SESSIONS } from '../data/demoData';
 import {
@@ -168,7 +169,9 @@ export const PlannerProvider: React.FC<{ children: React.ReactNode }> = ({ child
   const [people, setPeople] = useState<Person[]>(() => {
     try {
       const saved = localStorage.getItem(LOCAL_STORAGE_PEOPLE);
-      return saved ? JSON.parse(saved) : INITIAL_PEOPLE;
+      if (!saved) return INITIAL_PEOPLE;
+      const parsed: Person[] = JSON.parse(saved);
+      return parsed.map((p) => ({ ...p, roles: normalizeRoles(p.roles) }));
     } catch {
       return INITIAL_PEOPLE;
     }
@@ -388,20 +391,18 @@ export const PlannerProvider: React.FC<{ children: React.ReactNode }> = ({ child
     }
 
     if (filters.personId !== 'All') {
-      result = result.filter(
-        (s) =>
-          s.lecturerIds?.includes(filters.personId) ||
-          s.supervisorIds?.includes(filters.personId) ||
-          s.technicalIds?.includes(filters.personId)
-      );
+      result = result.filter((s) => isPersonInSession(filters.personId, s).inSession);
     }
 
     if (filters.role !== 'All') {
       const r = filters.role;
       result = result.filter((s) => {
-        if (r === 'Lecturer') return s.lecturerIds?.length > 0;
-        if (r === 'Supervisor') return s.supervisorIds?.length > 0;
-        if (r === 'Technical') return s.technicalIds?.length > 0;
+        if (r === 'محاضر') return (s.lecturerIds?.length || 0) > 0;
+        if (r === 'مشرف فنى') return (s.supervisorIds?.length || 0) > 0;
+        if (r === 'تقنى/ادارى') return (s.technicalIds?.length || 0) > 0;
+        if (r === 'مسؤل مالى') return (s.financialIds?.length || 0) > 0;
+        if (r === 'فنى اجهزة') return (s.equipmentIds?.length || 0) > 0;
+        if (r === 'تصوير وطباعة') return (s.printingIds?.length || 0) > 0;
         return true;
       });
     }
@@ -422,6 +423,9 @@ export const PlannerProvider: React.FC<{ children: React.ReactNode }> = ({ child
           ...(s.lecturerIds || []),
           ...(s.supervisorIds || []),
           ...(s.technicalIds || []),
+          ...(s.financialIds || []),
+          ...(s.equipmentIds || []),
+          ...(s.printingIds || []),
         ].some((pid) => {
           const person = people.find((p) => p.id === pid);
           return person && person.name.toLowerCase().includes(q);
@@ -553,10 +557,13 @@ export const PlannerProvider: React.FC<{ children: React.ReactNode }> = ({ child
     const assignedCount =
       (data.lecturerIds?.length || 0) +
       (data.supervisorIds?.length || 0) +
-      (data.technicalIds?.length || 0);
+      (data.technicalIds?.length || 0) +
+      (data.financialIds?.length || 0) +
+      (data.equipmentIds?.length || 0) +
+      (data.printingIds?.length || 0);
 
     if (assignedCount === 0) {
-      return { success: false, error: 'Resource Required: Assign at least one Lecturer, Supervisor, or Technical specialist' };
+      return { success: false, error: 'Resource Required: Assign at least one team member' };
     }
 
     // 2. Conflict engine check
@@ -713,9 +720,12 @@ export const PlannerProvider: React.FC<{ children: React.ReactNode }> = ({ child
       startTime: session.startTime,
       endTime: session.endTime,
       location: session.location,
-      lecturerIds: [...session.lecturerIds],
-      supervisorIds: [...session.supervisorIds],
-      technicalIds: [...session.technicalIds],
+      lecturerIds: [...(session.lecturerIds || [])],
+      supervisorIds: [...(session.supervisorIds || [])],
+      technicalIds: [...(session.technicalIds || [])],
+      financialIds: [...(session.financialIds || [])],
+      equipmentIds: [...(session.equipmentIds || [])],
+      printingIds: [...(session.printingIds || [])],
       notes: session.notes ? `Copy of ${session.notes}` : 'Duplicated session',
     };
 
@@ -921,7 +931,9 @@ export const PlannerProvider: React.FC<{ children: React.ReactNode }> = ({ child
 
         if (res.hasData || res.settings !== null) {
           skipNextAutoPushRef.current = true;
-          if (Array.isArray(res.people)) setPeople(res.people);
+          if (Array.isArray(res.people)) {
+            setPeople(res.people.map((p) => ({ ...p, roles: normalizeRoles(p.roles) })));
+          }
           if (Array.isArray(res.courses)) setCourses(res.courses);
           if (Array.isArray(res.sessions)) setSessions(res.sessions);
           if (res.settings) setSettings((prev) => ({ ...prev, ...res.settings }));

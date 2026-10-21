@@ -141,7 +141,10 @@ export const MonthView: React.FC<MonthViewProps> = ({
                       const totalStaff =
                         (session.lecturerIds?.length || 0) +
                         (session.supervisorIds?.length || 0) +
-                        (session.technicalIds?.length || 0);
+                        (session.technicalIds?.length || 0) +
+                        (session.financialIds?.length || 0) +
+                        (session.equipmentIds?.length || 0) +
+                        (session.printingIds?.length || 0);
 
                       return (
                         <div

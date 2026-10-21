@@ -23,9 +23,9 @@ export const ImportModal: React.FC<ImportModalProps> = ({ isOpen, onClose }) => 
   if (!isOpen) return null;
 
   const samplePeopleCsv = `ID,Name,Employee ID,Department,Role,Email,Phone,Active
-person_101,Dr. Tamer Fawzy,EMP-1011,Health Informatics,Lecturer,tamer@hospital.org,+20 100 111 2222,true
-person_102,Dr. Nourhan Adel,EMP-2011,Clinical Analytics,Supervisor,nourhan@hospital.org,+20 100 333 4444,true
-person_103,Eng. Hany Samir,EMP-3011,Simulation IT,Technical,hany@hospital.org,+20 100 555 6666,true`;
+person_101,Dr. Tamer Fawzy,EMP-1011,Health Informatics,محاضر,tamer@hospital.org,+20 100 111 2222,true
+person_102,Dr. Nourhan Adel,EMP-2011,Clinical Analytics,مشرف فنى,nourhan@hospital.org,+20 100 333 4444,true
+person_103,Eng. Hany Samir,EMP-3011,Simulation IT,تقنى/ادارى,hany@hospital.org,+20 100 555 6666,true`;
 
   const sampleCoursesCsv = `Course ID,Course Name,Course Code,Category,Description,Default Duration Days,Active
 course_101,Advanced Healthcare Informatics,AHI-501,Health Informatics,Advanced hospital IT and HL7,5,true

@@ -112,9 +112,12 @@ export const PeoplePage: React.FC<PeoplePageProps> = ({
           >
             <option value="All">All Roles</option>
             <option value="Multiple">⭐ Multiple Roles</option>
-            <option value="Lecturer">Lecturer (🎓)</option>
-            <option value="Supervisor">Supervisor (👁)</option>
-            <option value="Technical">Technical (💻)</option>
+            <option value="محاضر">محاضر (🎓)</option>
+            <option value="مشرف فنى">مشرف فنى (👁)</option>
+            <option value="تقنى/ادارى">تقنى/ادارى (💻)</option>
+            <option value="مسؤل مالى">مسؤل مالى (💰)</option>
+            <option value="فنى اجهزة">فنى اجهزة (🔧)</option>
+            <option value="تصوير وطباعة">تصوير وطباعة (🖨️)</option>
           </select>
 
           <select

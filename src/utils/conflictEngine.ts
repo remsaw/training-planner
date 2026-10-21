@@ -7,13 +7,22 @@ import { formatDateRange } from './dateUtils';
 export function isPersonInSession(personId: string, session: TrainingSession): { inSession: boolean; role?: Role; roles: Role[] } {
   const roles: Role[] = [];
   if (session.lecturerIds?.includes(personId)) {
-    roles.push('Lecturer');
+    roles.push('محاضر');
   }
   if (session.supervisorIds?.includes(personId)) {
-    roles.push('Supervisor');
+    roles.push('مشرف فنى');
   }
   if (session.technicalIds?.includes(personId)) {
-    roles.push('Technical');
+    roles.push('تقنى/ادارى');
+  }
+  if (session.financialIds?.includes(personId)) {
+    roles.push('مسؤل مالى');
+  }
+  if (session.equipmentIds?.includes(personId)) {
+    roles.push('فنى اجهزة');
+  }
+  if (session.printingIds?.includes(personId)) {
+    roles.push('تصوير وطباعة');
   }
   return {
     inSession: roles.length > 0,
@@ -141,6 +150,9 @@ export function validateSessionConflicts(
     lecturerIds: string[];
     supervisorIds: string[];
     technicalIds: string[];
+    financialIds?: string[];
+    equipmentIds?: string[];
+    printingIds?: string[];
   },
   sessions: TrainingSession[],
   people: Person[],
@@ -203,9 +215,12 @@ export function validateSessionConflicts(
     }
   };
 
-  checkRoleGroup(candidate.lecturerIds || [], 'Lecturer');
-  checkRoleGroup(candidate.supervisorIds || [], 'Supervisor');
-  checkRoleGroup(candidate.technicalIds || [], 'Technical');
+  checkRoleGroup(candidate.lecturerIds || [], 'محاضر');
+  checkRoleGroup(candidate.supervisorIds || [], 'مشرف فنى');
+  checkRoleGroup(candidate.technicalIds || [], 'تقنى/ادارى');
+  checkRoleGroup(candidate.financialIds || [], 'مسؤل مالى');
+  checkRoleGroup(candidate.equipmentIds || [], 'فنى اجهزة');
+  checkRoleGroup(candidate.printingIds || [], 'تصوير وطباعة');
 
   return conflicts;
 }
@@ -230,9 +245,12 @@ export function detectAllConflicts(
       if (s1.startDate <= s2.endDate && s1.endDate >= s2.startDate) {
         // Find people in both
         const s1People = [
-          ...(s1.lecturerIds || []).map((id) => ({ id, role: 'Lecturer' as Role })),
-          ...(s1.supervisorIds || []).map((id) => ({ id, role: 'Supervisor' as Role })),
-          ...(s1.technicalIds || []).map((id) => ({ id, role: 'Technical' as Role })),
+          ...(s1.lecturerIds || []).map((id) => ({ id, role: 'محاضر' as Role })),
+          ...(s1.supervisorIds || []).map((id) => ({ id, role: 'مشرف فنى' as Role })),
+          ...(s1.technicalIds || []).map((id) => ({ id, role: 'تقنى/ادارى' as Role })),
+          ...(s1.financialIds || []).map((id) => ({ id, role: 'مسؤل مالى' as Role })),
+          ...(s1.equipmentIds || []).map((id) => ({ id, role: 'فنى اجهزة' as Role })),
+          ...(s1.printingIds || []).map((id) => ({ id, role: 'تصوير وطباعة' as Role })),
         ];
 
         for (const p of s1People) {

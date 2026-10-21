@@ -41,6 +41,18 @@ export const TrainingDetailsModal: React.FC<TrainingDetailsModalProps> = ({
   const lecturers = people.filter((p) => session.lecturerIds?.includes(p.id));
   const supervisors = people.filter((p) => session.supervisorIds?.includes(p.id));
   const technicals = people.filter((p) => session.technicalIds?.includes(p.id));
+  const financials = people.filter((p) => session.financialIds?.includes(p.id));
+  const equipments = people.filter((p) => session.equipmentIds?.includes(p.id));
+  const printings = people.filter((p) => session.printingIds?.includes(p.id));
+
+  const roleGroups = [
+    { role: 'محاضر' as const, people: lecturers },
+    { role: 'مشرف فنى' as const, people: supervisors },
+    { role: 'تقنى/ادارى' as const, people: technicals },
+    { role: 'مسؤل مالى' as const, people: financials },
+    { role: 'فنى اجهزة' as const, people: equipments },
+    { role: 'تصوير وطباعة' as const, people: printings },
+  ];
 
   const conflicts = allConflicts.filter(
     (c) => c.conflictingSessionId === session.id || c.attemptedSessionId === session.id
@@ -128,65 +140,26 @@ export const TrainingDetailsModal: React.FC<TrainingDetailsModalProps> = ({
             </h3>
 
             <div className="space-y-2">
-              {/* Lecturers */}
-              <div className="p-2.5 rounded-lg border border-gray-200 bg-white">
-                <div className="flex items-center justify-between mb-1.5">
-                  <RoleBadge role="Lecturer" size="sm" />
-                  <span className="text-[10px] text-gray-400">{lecturers.length} assigned</span>
-                </div>
-                {lecturers.length === 0 ? (
-                  <span className="text-gray-400 italic text-[11px]">No lecturer assigned</span>
-                ) : (
-                  <div className="space-y-1">
-                    {lecturers.map((p) => (
-                      <div key={p.id} className="flex items-center justify-between text-xs gap-2">
-                        <span className="font-semibold text-gray-900 truncate">{p.name}</span>
-                        <span className="text-[11px] text-gray-500 shrink-0">{p.department}</span>
-                      </div>
-                    ))}
+              {roleGroups.map((group) => (
+                <div key={group.role} className="p-2.5 rounded-lg border border-gray-200 bg-white">
+                  <div className="flex items-center justify-between mb-1.5">
+                    <RoleBadge role={group.role} size="sm" />
+                    <span className="text-[10px] text-gray-400">{group.people.length} assigned</span>
                   </div>
-                )}
-              </div>
-
-              {/* Supervisors */}
-              <div className="p-2.5 rounded-lg border border-gray-200 bg-white">
-                <div className="flex items-center justify-between mb-1.5">
-                  <RoleBadge role="Supervisor" size="sm" />
-                  <span className="text-[10px] text-gray-400">{supervisors.length} assigned</span>
+                  {group.people.length === 0 ? (
+                    <span className="text-gray-400 italic text-[11px]">None assigned</span>
+                  ) : (
+                    <div className="space-y-1">
+                      {group.people.map((p) => (
+                        <div key={p.id} className="flex items-center justify-between text-xs gap-2">
+                          <span className="font-semibold text-gray-900 truncate">{p.name}</span>
+                          <span className="text-[11px] text-gray-500 shrink-0">{p.department}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
-                {supervisors.length === 0 ? (
-                  <span className="text-gray-400 italic text-[11px]">No supervisor assigned</span>
-                ) : (
-                  <div className="space-y-1">
-                    {supervisors.map((p) => (
-                      <div key={p.id} className="flex items-center justify-between text-xs gap-2">
-                        <span className="font-semibold text-gray-900 truncate">{p.name}</span>
-                        <span className="text-[11px] text-gray-500 shrink-0">{p.department}</span>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-
-              {/* Technical */}
-              <div className="p-2.5 rounded-lg border border-gray-200 bg-white">
-                <div className="flex items-center justify-between mb-1.5">
-                  <RoleBadge role="Technical" size="sm" />
-                  <span className="text-[10px] text-gray-400">{technicals.length} assigned</span>
-                </div>
-                {technicals.length === 0 ? (
-                  <span className="text-gray-400 italic text-[11px]">No technical specialist assigned</span>
-                ) : (
-                  <div className="space-y-1">
-                    {technicals.map((p) => (
-                      <div key={p.id} className="flex items-center justify-between text-xs gap-2">
-                        <span className="font-semibold text-gray-900 truncate">{p.name}</span>
-                        <span className="text-[11px] text-gray-500 shrink-0">{p.department}</span>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
+              ))}
             </div>
           </div>
 

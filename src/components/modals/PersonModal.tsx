@@ -18,7 +18,7 @@ export const PersonModal: React.FC<PersonModalProps> = ({ isOpen, onClose, perso
   const [name, setName] = useState('');
   const [employeeId, setEmployeeId] = useState('');
   const [department, setDepartment] = useState('Medical Education');
-  const [roles, setRoles] = useState<Role[]>(['Lecturer']);
+  const [roles, setRoles] = useState<Role[]>(['محاضر']);
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [active, setActive] = useState(true);
@@ -28,7 +28,7 @@ export const PersonModal: React.FC<PersonModalProps> = ({ isOpen, onClose, perso
       setName(existingPerson.name);
       setEmployeeId(existingPerson.employeeId || '');
       setDepartment(existingPerson.department);
-      setRoles(existingPerson.roles || ['Lecturer']);
+      setRoles(existingPerson.roles?.length ? existingPerson.roles : ['محاضر']);
       setEmail(existingPerson.email || '');
       setPhone(existingPerson.phone || '');
       setActive(existingPerson.active);
@@ -36,7 +36,7 @@ export const PersonModal: React.FC<PersonModalProps> = ({ isOpen, onClose, perso
       setName('');
       setEmployeeId(`EMP-${1000 + people.length + 1}`);
       setDepartment('Health Informatics');
-      setRoles(['Lecturer']);
+      setRoles(['محاضر']);
       setEmail('');
       setPhone('');
       setActive(true);
@@ -152,22 +152,40 @@ export const PersonModal: React.FC<PersonModalProps> = ({ isOpen, onClose, perso
               {(
                 [
                   {
-                    role: 'Lecturer' as Role,
-                    label: 'Lecturer',
+                    role: 'محاضر' as Role,
+                    label: 'محاضر',
                     icon: '🎓',
                     desc: 'Delivers lectures & modules',
                   },
                   {
-                    role: 'Supervisor' as Role,
-                    label: 'Supervisor',
+                    role: 'مشرف فنى' as Role,
+                    label: 'مشرف فنى',
                     icon: '👁',
-                    desc: 'Training oversight & clinical guidance',
+                    desc: 'Training oversight & supervision',
                   },
                   {
-                    role: 'Technical' as Role,
-                    label: 'Technical',
+                    role: 'تقنى/ادارى' as Role,
+                    label: 'تقنى/ادارى',
                     icon: '💻',
-                    desc: 'Lab systems & simulation IT',
+                    desc: 'Technical & administrative support',
+                  },
+                  {
+                    role: 'مسؤل مالى' as Role,
+                    label: 'مسؤل مالى',
+                    icon: '💰',
+                    desc: 'Financial coordination & accounting',
+                  },
+                  {
+                    role: 'فنى اجهزة' as Role,
+                    label: 'فنى اجهزة',
+                    icon: '🔧',
+                    desc: 'Equipment setup & maintenance',
+                  },
+                  {
+                    role: 'تصوير وطباعة' as Role,
+                    label: 'تصوير وطباعة',
+                    icon: '🖨️',
+                    desc: 'Printing, copying & materials',
                   },
                 ] as const
               ).map((item) => {

@@ -1,4 +1,4 @@
-import { Person, Course, TrainingSession, ConflictReport, Role } from '../types';
+import { Person, Course, TrainingSession, ConflictReport, Role, normalizeRole } from '../types';
 
 /**
  * Escapes and formats a single value for CSV output
@@ -65,12 +65,18 @@ export function exportTrainingToCsv(sessions: TrainingSession[], courses: Course
     'Start Time',
     'End Time',
     'Location',
-    'Lecturer IDs',
-    'Lecturer Names',
-    'Supervisor IDs',
-    'Supervisor Names',
-    'Technical IDs',
-    'Technical Names',
+    'محاضر IDs',
+    'محاضر Names',
+    'مشرف فنى IDs',
+    'مشرف فنى Names',
+    'تقنى/ادارى IDs',
+    'تقنى/ادارى Names',
+    'مسؤل مالى IDs',
+    'مسؤل مالى Names',
+    'فنى اجهزة IDs',
+    'فنى اجهزة Names',
+    'تصوير وطباعة IDs',
+    'تصوير وطباعة Names',
     'Notes',
   ];
 
@@ -96,6 +102,12 @@ export function exportTrainingToCsv(sessions: TrainingSession[], courses: Course
       escapeCsv(getNames(s.supervisorIds || [])),
       escapeCsv((s.technicalIds || []).join('; ')),
       escapeCsv(getNames(s.technicalIds || [])),
+      escapeCsv((s.financialIds || []).join('; ')),
+      escapeCsv(getNames(s.financialIds || [])),
+      escapeCsv((s.equipmentIds || []).join('; ')),
+      escapeCsv(getNames(s.equipmentIds || [])),
+      escapeCsv((s.printingIds || []).join('; ')),
+      escapeCsv(getNames(s.printingIds || [])),
       escapeCsv(s.notes || ''),
     ];
   });
@@ -198,7 +210,7 @@ export function parsePeopleCsv(csvText: string): { people: Person[]; errors: str
     const employeeId = hasEmployeeIdCol ? row[2] || '' : '';
     const offset = hasEmployeeIdCol ? 1 : 0;
     const department = row[2 + offset] || 'General';
-    const roleStr = row[3 + offset] || 'Lecturer';
+    const roleStr = row[3 + offset] || 'محاضر';
     const email = row[4 + offset] || '';
     const phone = row[5 + offset] || '';
     const activeStr = row[6 + offset] || 'true';
@@ -209,10 +221,10 @@ export function parsePeopleCsv(csvText: string): { people: Person[]; errors: str
     }
 
     const rawRoles = roleStr.split(/[;,]/).map((r) => r.trim());
-    const validRoles: Role[] = rawRoles.filter((r): r is Role =>
-      ['Lecturer', 'Supervisor', 'Technical'].includes(r)
-    );
-    if (validRoles.length === 0) validRoles.push('Lecturer');
+    const validRoles: Role[] = rawRoles
+      .map((r) => normalizeRole(r))
+      .filter((r): r is Role => r !== null);
+    if (validRoles.length === 0) validRoles.push('محاضر');
 
     people.push({
       id,
@@ -304,7 +316,11 @@ export function parseTrainingCsv(csvText: string): { sessions: TrainingSession[]
     const lecturerIds = ((isExportFormat ? row[8] : row[7]) || '').split(/[;,]/).map((s) => s.trim()).filter(Boolean);
     const supervisorIds = ((isExportFormat ? row[10] : row[8]) || '').split(/[;,]/).map((s) => s.trim()).filter(Boolean);
     const technicalIds = ((isExportFormat ? row[12] : row[9]) || '').split(/[;,]/).map((s) => s.trim()).filter(Boolean);
-    const notes = (isExportFormat ? row[14] : row[10]) || '';
+    const hasNewRolesExport = isExportFormat && row.length >= 21;
+    const financialIds = (hasNewRolesExport ? row[14] || '' : '').split(/[;,]/).map((s) => s.trim()).filter(Boolean);
+    const equipmentIds = (hasNewRolesExport ? row[16] || '' : '').split(/[;,]/).map((s) => s.trim()).filter(Boolean);
+    const printingIds = (hasNewRolesExport ? row[18] || '' : '').split(/[;,]/).map((s) => s.trim()).filter(Boolean);
+    const notes = (hasNewRolesExport ? row[20] : isExportFormat ? row[14] : row[10]) || '';
 
     if (!courseId) {
       errors.push(`Row ${i + 1}: Course ID is required`);
@@ -326,6 +342,9 @@ export function parseTrainingCsv(csvText: string): { sessions: TrainingSession[]
       lecturerIds,
       supervisorIds,
       technicalIds,
+      financialIds,
+      equipmentIds,
+      printingIds,
       notes,
     });
   }

@@ -66,6 +66,9 @@ export const TrainingModal: React.FC<TrainingModalProps> = ({
   const [lecturerIds, setLecturerIds] = useState<string[]>([]);
   const [supervisorIds, setSupervisorIds] = useState<string[]>([]);
   const [technicalIds, setTechnicalIds] = useState<string[]>([]);
+  const [financialIds, setFinancialIds] = useState<string[]>([]);
+  const [equipmentIds, setEquipmentIds] = useState<string[]>([]);
+  const [printingIds, setPrintingIds] = useState<string[]>([]);
   const [notes, setNotes] = useState('');
   const [repeatMode, setRepeatMode] = useState<'None' | 'Daily' | 'Weekly'>('None');
   const [repeatWeeks, setRepeatWeeks] = useState(4);
@@ -74,6 +77,9 @@ export const TrainingModal: React.FC<TrainingModalProps> = ({
   const [lecturerSearch, setLecturerSearch] = useState('');
   const [supervisorSearch, setSupervisorSearch] = useState('');
   const [technicalSearch, setTechnicalSearch] = useState('');
+  const [financialSearch, setFinancialSearch] = useState('');
+  const [equipmentSearch, setEquipmentSearch] = useState('');
+  const [printingSearch, setPrintingSearch] = useState('');
 
   // Conflict warning banner state
   const [inlineConflictWarning, setInlineConflictWarning] = useState<string | null>(null);
@@ -86,6 +92,9 @@ export const TrainingModal: React.FC<TrainingModalProps> = ({
     setLecturerSearch('');
     setSupervisorSearch('');
     setTechnicalSearch('');
+    setFinancialSearch('');
+    setEquipmentSearch('');
+    setPrintingSearch('');
 
     if (existingSession) {
       setCourseId(existingSession.courseId);
@@ -97,6 +106,9 @@ export const TrainingModal: React.FC<TrainingModalProps> = ({
       setLecturerIds(existingSession.lecturerIds || []);
       setSupervisorIds(existingSession.supervisorIds || []);
       setTechnicalIds(existingSession.technicalIds || []);
+      setFinancialIds(existingSession.financialIds || []);
+      setEquipmentIds(existingSession.equipmentIds || []);
+      setPrintingIds(existingSession.printingIds || []);
       setNotes(existingSession.notes || '');
       setRepeatMode('None');
     } else {
@@ -119,25 +131,24 @@ export const TrainingModal: React.FC<TrainingModalProps> = ({
       setRepeatMode('None');
       setRepeatWeeks(4);
 
+      setLecturerIds([]);
+      setSupervisorIds([]);
+      setTechnicalIds([]);
+      setFinancialIds([]);
+      setEquipmentIds([]);
+      setPrintingIds([]);
+
       if (initialPersonId) {
         const p = people.find((item) => item.id === initialPersonId);
         if (p) {
-          setLecturerIds(p.roles.includes('Lecturer') ? [p.id] : []);
-          setSupervisorIds(!p.roles.includes('Lecturer') && p.roles.includes('Supervisor') ? [p.id] : []);
-          setTechnicalIds(
-            !p.roles.includes('Lecturer') && !p.roles.includes('Supervisor') && p.roles.includes('Technical')
-              ? [p.id]
-              : []
-          );
-        } else {
-          setLecturerIds([]);
-          setSupervisorIds([]);
-          setTechnicalIds([]);
+          const primaryRole = p.roles[0];
+          if (primaryRole === 'محاضر') setLecturerIds([p.id]);
+          else if (primaryRole === 'مشرف فنى') setSupervisorIds([p.id]);
+          else if (primaryRole === 'تقنى/ادارى') setTechnicalIds([p.id]);
+          else if (primaryRole === 'مسؤل مالى') setFinancialIds([p.id]);
+          else if (primaryRole === 'فنى اجهزة') setEquipmentIds([p.id]);
+          else if (primaryRole === 'تصوير وطباعة') setPrintingIds([p.id]);
         }
-      } else {
-        setLecturerIds([]);
-        setSupervisorIds([]);
-        setTechnicalIds([]);
       }
     }
   }, [existingSession, initialDate, initialEndDate, initialPersonId, initialTime, initialCourseId, courses, people, settings.defaultDurationDays, isOpen]);
@@ -176,6 +187,9 @@ export const TrainingModal: React.FC<TrainingModalProps> = ({
         lecturerIds,
         supervisorIds,
         technicalIds,
+        financialIds,
+        equipmentIds,
+        printingIds,
       },
       sessions,
       people,
@@ -191,6 +205,9 @@ export const TrainingModal: React.FC<TrainingModalProps> = ({
     lecturerIds,
     supervisorIds,
     technicalIds,
+    financialIds,
+    equipmentIds,
+    printingIds,
     sessions,
     people,
     courses,
@@ -200,17 +217,22 @@ export const TrainingModal: React.FC<TrainingModalProps> = ({
 
   // Toggle selection with conflict feedback
   const handleTogglePerson = (personId: string, role: Role) => {
-    const isLecturer = role === 'Lecturer';
-    const isSupervisor = role === 'Supervisor';
-    const isTechnical = role === 'Technical';
+    const roleStateMap: Record<Role, { list: string[]; setList: React.Dispatch<React.SetStateAction<string[]>> }> = {
+      'محاضر': { list: lecturerIds, setList: setLecturerIds },
+      'مشرف فنى': { list: supervisorIds, setList: setSupervisorIds },
+      'تقنى/ادارى': { list: technicalIds, setList: setTechnicalIds },
+      'مسؤل مالى': { list: financialIds, setList: setFinancialIds },
+      'فنى اجهزة': { list: equipmentIds, setList: setEquipmentIds },
+      'تصوير وطباعة': { list: printingIds, setList: setPrintingIds },
+    };
 
-    const currentList = isLecturer ? lecturerIds : isSupervisor ? supervisorIds : technicalIds;
-    const isSelected = currentList.includes(personId);
+    const target = roleStateMap[role];
+    if (!target) return;
+
+    const isSelected = target.list.includes(personId);
 
     if (isSelected) {
-      if (isLecturer) setLecturerIds((prev) => prev.filter((id) => id !== personId));
-      if (isSupervisor) setSupervisorIds((prev) => prev.filter((id) => id !== personId));
-      if (isTechnical) setTechnicalIds((prev) => prev.filter((id) => id !== personId));
+      target.setList((prev) => prev.filter((id) => id !== personId));
       setInlineConflictWarning(null);
     } else {
       // Check if person is busy
@@ -228,9 +250,7 @@ export const TrainingModal: React.FC<TrainingModalProps> = ({
       }
 
       // Add to selection
-      if (isLecturer) setLecturerIds((prev) => [...prev, personId]);
-      if (isSupervisor) setSupervisorIds((prev) => [...prev, personId]);
-      if (isTechnical) setTechnicalIds((prev) => [...prev, personId]);
+      target.setList((prev) => [...prev, personId]);
       setInlineConflictWarning(null);
     }
   };
@@ -250,8 +270,15 @@ export const TrainingModal: React.FC<TrainingModalProps> = ({
       showToast('warning', 'Course Required', 'Please select a training course.');
       return;
     }
-    if (lecturerIds.length === 0 && supervisorIds.length === 0 && technicalIds.length === 0) {
-      showToast('warning', 'Resource Required', 'Please assign at least one Lecturer, Supervisor, or Technical specialist.');
+    if (
+      lecturerIds.length === 0 &&
+      supervisorIds.length === 0 &&
+      technicalIds.length === 0 &&
+      financialIds.length === 0 &&
+      equipmentIds.length === 0 &&
+      printingIds.length === 0
+    ) {
+      showToast('warning', 'Resource Required', 'Please assign at least one team member to this training.');
       return;
     }
 
@@ -271,6 +298,9 @@ export const TrainingModal: React.FC<TrainingModalProps> = ({
         lecturerIds,
         supervisorIds,
         technicalIds,
+        financialIds,
+        equipmentIds,
+        printingIds,
         notes,
       });
       if (res.success) {
@@ -293,6 +323,9 @@ export const TrainingModal: React.FC<TrainingModalProps> = ({
             lecturerIds,
             supervisorIds,
             technicalIds,
+            financialIds,
+            equipmentIds,
+            printingIds,
             notes,
           },
         ];
@@ -312,6 +345,9 @@ export const TrainingModal: React.FC<TrainingModalProps> = ({
               lecturerIds,
               supervisorIds,
               technicalIds,
+              financialIds,
+              equipmentIds,
+              printingIds,
             },
             simulatedSessions,
             people,
@@ -338,6 +374,9 @@ export const TrainingModal: React.FC<TrainingModalProps> = ({
             lecturerIds,
             supervisorIds,
             technicalIds,
+            financialIds,
+            equipmentIds,
+            printingIds,
           });
         }
       }
@@ -352,6 +391,9 @@ export const TrainingModal: React.FC<TrainingModalProps> = ({
         lecturerIds,
         supervisorIds,
         technicalIds,
+        financialIds,
+        equipmentIds,
+        printingIds,
         notes,
       });
 
@@ -373,6 +415,9 @@ export const TrainingModal: React.FC<TrainingModalProps> = ({
             lecturerIds,
             supervisorIds,
             technicalIds,
+            financialIds,
+            equipmentIds,
+            printingIds,
             notes: notes ? `${notes} (Occurrence ${w + 1})` : `Occurrence ${w + 1}`,
           });
         }
@@ -403,7 +448,7 @@ export const TrainingModal: React.FC<TrainingModalProps> = ({
         <div className="flex items-center justify-between">
           <label className="text-xs font-semibold text-gray-700 flex items-center gap-1.5">
             <RoleBadge role={role} size="sm" />
-            <span>Assign {role}s</span>
+            <span>Assign {role}</span>
           </label>
           <span className="text-[11px] text-gray-500 font-medium">
             {selectedIds.length} selected
@@ -415,14 +460,14 @@ export const TrainingModal: React.FC<TrainingModalProps> = ({
           type="text"
           value={searchVal}
           onChange={(e) => setSearchVal(e.target.value)}
-          placeholder={`Search ${role}s...`}
+          placeholder={`Search ${role}...`}
           className="w-full px-2.5 py-1 text-xs border border-gray-300 rounded-md bg-gray-50/50 focus:bg-white focus:outline-hidden focus:ring-1 focus:ring-blue-500"
         />
 
         {/* People items */}
         <div className="max-h-36 overflow-y-auto divide-y divide-gray-100 border border-gray-200 rounded-lg bg-white p-1">
           {filtered.length === 0 ? (
-            <div className="p-2 text-center text-xs text-gray-400">No matching {role}s</div>
+            <div className="p-2 text-center text-xs text-gray-400">No matching {role}</div>
           ) : (
             filtered.map((person) => {
               const isSelected = selectedIds.includes(person.id);
@@ -670,14 +715,23 @@ export const TrainingModal: React.FC<TrainingModalProps> = ({
               </span>
             </div>
 
-            {/* Lecturers */}
-            {renderRolePicker('Lecturer', lecturerIds, lecturerSearch, setLecturerSearch)}
+            {/* محاضر */}
+            {renderRolePicker('محاضر', lecturerIds, lecturerSearch, setLecturerSearch)}
 
-            {/* Supervisors */}
-            {renderRolePicker('Supervisor', supervisorIds, supervisorSearch, setSupervisorSearch)}
+            {/* مشرف فنى */}
+            {renderRolePicker('مشرف فنى', supervisorIds, supervisorSearch, setSupervisorSearch)}
 
-            {/* Technical */}
-            {renderRolePicker('Technical', technicalIds, technicalSearch, setTechnicalSearch)}
+            {/* تقنى/ادارى */}
+            {renderRolePicker('تقنى/ادارى', technicalIds, technicalSearch, setTechnicalSearch)}
+
+            {/* مسؤل مالى */}
+            {renderRolePicker('مسؤل مالى', financialIds, financialSearch, setFinancialSearch)}
+
+            {/* فنى اجهزة */}
+            {renderRolePicker('فنى اجهزة', equipmentIds, equipmentSearch, setEquipmentSearch)}
+
+            {/* تصوير وطباعة */}
+            {renderRolePicker('تصوير وطباعة', printingIds, printingSearch, setPrintingSearch)}
           </div>
 
           {/* Recurring Options */}

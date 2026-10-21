@@ -88,7 +88,7 @@ export const GOOGLE_APPS_SCRIPT_CODE = `function doGet(e) {
           name: String(r.name || ''),
           employeeId: String(r.employeeId || ''),
           department: String(r.department || 'General'),
-          roles: String(r.roles || 'Lecturer').split(';').map(function (s) { return s.trim(); }).filter(Boolean),
+          roles: String(r.roles || 'محاضر').split(';').map(function (s) { return s.trim(); }).filter(Boolean),
           email: String(r.email || ''),
           phone: String(r.phone || ''),
           active: String(r.active).toLowerCase() !== 'false',
@@ -119,6 +119,9 @@ export const GOOGLE_APPS_SCRIPT_CODE = `function doGet(e) {
           lecturerIds: splitIds(r.lecturerIds),
           supervisorIds: splitIds(r.supervisorIds),
           technicalIds: splitIds(r.technicalIds),
+          financialIds: splitIds(r.financialIds),
+          equipmentIds: splitIds(r.equipmentIds),
+          printingIds: splitIds(r.printingIds),
           notes: String(r.notes || ''),
           isDemo: String(r.isDemo).toLowerCase() === 'true'
         };
@@ -146,7 +149,7 @@ function doPost(e) {
         payload.people.map(function (p) {
           return {
             id: p.id || '', name: p.name || '', employeeId: p.employeeId || '',
-            department: p.department || '', roles: Array.isArray(p.roles) ? p.roles.join('; ') : 'Lecturer',
+            department: p.department || '', roles: Array.isArray(p.roles) ? p.roles.join('; ') : 'محاضر',
             email: p.email || '', phone: p.phone || '', active: p.active ? 'true' : 'false',
             avatarColor: p.avatarColor || 'bg-blue-600'
           };
@@ -169,7 +172,7 @@ function doPost(e) {
 
     if (Array.isArray(payload.sessions)) {
       writeSheetObjects(ss, 'Sessions',
-        ['id', 'courseId', 'startDate', 'endDate', 'startTime', 'endTime', 'location', 'lecturerIds', 'supervisorIds', 'technicalIds', 'notes', 'isDemo'],
+        ['id', 'courseId', 'startDate', 'endDate', 'startTime', 'endTime', 'location', 'lecturerIds', 'supervisorIds', 'technicalIds', 'financialIds', 'equipmentIds', 'printingIds', 'notes', 'isDemo'],
         payload.sessions.map(function (s) {
           return {
             id: s.id || '', courseId: s.courseId || '', startDate: s.startDate || '', endDate: s.endDate || '',
@@ -177,6 +180,9 @@ function doPost(e) {
             lecturerIds: Array.isArray(s.lecturerIds) ? s.lecturerIds.join('; ') : '',
             supervisorIds: Array.isArray(s.supervisorIds) ? s.supervisorIds.join('; ') : '',
             technicalIds: Array.isArray(s.technicalIds) ? s.technicalIds.join('; ') : '',
+            financialIds: Array.isArray(s.financialIds) ? s.financialIds.join('; ') : '',
+            equipmentIds: Array.isArray(s.equipmentIds) ? s.equipmentIds.join('; ') : '',
+            printingIds: Array.isArray(s.printingIds) ? s.printingIds.join('; ') : '',
             notes: s.notes || '', isDemo: s.isDemo ? 'true' : 'false'
           };
         })

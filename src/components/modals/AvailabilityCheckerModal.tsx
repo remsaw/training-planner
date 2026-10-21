@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { usePlanner } from '../../context/PlannerContext';
 import { getPeopleAvailability } from '../../utils/conflictEngine';
 import { RoleBadge } from '../common/RoleBadge';
+import { Role } from '../../types';
 import { formatDateRange, formatDuration, formatDate, addDays } from '../../utils/dateUtils';
 import { X, Search, CheckCircle2, AlertCircle, Plus } from 'lucide-react';
 
@@ -22,7 +23,7 @@ export const AvailabilityCheckerModal: React.FC<AvailabilityCheckerModalProps> =
   const [endDate, setEndDate] = useState(() => addDays(formatDate(new Date()), 4));
   const [startTime, setStartTime] = useState('09:00');
   const [endTime, setEndTime] = useState('14:00');
-  const [roleFilter, setRoleFilter] = useState<'All' | 'Lecturer' | 'Supervisor' | 'Technical'>('All');
+  const [roleFilter, setRoleFilter] = useState<'All' | Role>('All');
 
   // Compute live availability
   const availability = useMemo(() => {
@@ -118,9 +119,12 @@ export const AvailabilityCheckerModal: React.FC<AvailabilityCheckerModalProps> =
               className="w-full px-2 py-1.5 border border-gray-300 rounded-lg bg-white text-xs"
             >
               <option value="All">All Roles</option>
-              <option value="Lecturer">Lecturer</option>
-              <option value="Supervisor">Supervisor</option>
-              <option value="Technical">Technical</option>
+              <option value="محاضر">محاضر</option>
+              <option value="مشرف فنى">مشرف فنى</option>
+              <option value="تقنى/ادارى">تقنى/ادارى</option>
+              <option value="مسؤل مالى">مسؤل مالى</option>
+              <option value="فنى اجهزة">فنى اجهزة</option>
+              <option value="تصوير وطباعة">تصوير وطباعة</option>
             </select>
           </div>
         </div>
